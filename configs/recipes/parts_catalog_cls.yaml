@@ -1,0 +1,25 @@
+# Isolated-part IDENTIFICATION as classification (the honest framing for catalog photos with whole-image boxes).
+# Same sources and photo-grouped split as parts_catalog_det; output is an ImageFolder tree per split.
+name: parts_catalog_cls
+task: classification
+description: 52 isolated car-part classes, ImageFolder layout for the ConvNeXt classifier.
+sources:
+  - name: rf_used_auto_parts_50
+    class_map: parts_catalog
+  - name: rf_engine_internals_383
+    class_map: parts_catalog
+  - name: rf_engine_internals_129
+    class_map: parts_catalog
+split:
+  strategy: grouped
+  fractions: {train: 0.8, val: 0.1, test: 0.1}
+  seed: 2026
+  dedupe_hash: true
+classes: [engine_block, cylinder_head, piston, connecting_rod, crankshaft, camshaft, engine_valve, valve_lifter,
+          oil_pan, transmission, torque_converter, clutch_plate, pressure_plate, gear, shift_knob,
+          starter, alternator, water_pump, fuel_injector, carburetor, spark_plug, ignition_coil, distributor,
+          thermostat, oil_filter, oil_pressure_sensor, oxygen_sensor, air_compressor, radiator, radiator_fan,
+          radiator_hose, overflow_tank, muffler, battery, fuse_box, headlight, tail_light, side_mirror, spoiler,
+          gas_cap, rim, radio, instrument_cluster, window_regulator, brake_caliper, brake_pad, brake_rotor,
+          vacuum_brake_booster, coil_spring, leaf_spring, lower_control_arm, idler_arm]
+min_instances_per_class: 0

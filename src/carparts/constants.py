@@ -69,6 +69,53 @@ _ENGINE_BAY_ALIASES: dict[str, str] = {
 }
 
 
+# ----------------------------------------------------------------------------- parts catalog (isolated parts)
+# Photos of a single component (catalog / used-parts style). Source: Roboflow "car parts" by Used auto parts
+# classification (Public Domain, 50 classes, same taxonomy as Kaggle "50 Types of Car Parts", Apache 2.0) plus two
+# CC BY 4.0 engine-internals sets that add connecting_rod and gear. Spelling fixed ("CARBERATOR").
+PARTS_CATALOG_CLASSES: list[str] = [
+    # engine core
+    "engine_block", "cylinder_head", "piston", "connecting_rod", "crankshaft", "camshaft", "engine_valve",
+    "valve_lifter", "oil_pan",
+    # transmission & clutch
+    "transmission", "torque_converter", "clutch_plate", "pressure_plate", "gear", "shift_knob",
+    # engine accessories / fuel / ignition / cooling / exhaust
+    "starter", "alternator", "water_pump", "fuel_injector", "carburetor", "spark_plug", "ignition_coil",
+    "distributor", "thermostat", "oil_filter", "oil_pressure_sensor", "oxygen_sensor", "air_compressor",
+    "radiator", "radiator_fan", "radiator_hose", "overflow_tank", "muffler",
+    # electrical / body / interior
+    "battery", "fuse_box", "headlight", "tail_light", "side_mirror", "spoiler", "gas_cap", "rim", "radio",
+    "instrument_cluster", "window_regulator",
+    # brakes & suspension / steering
+    "brake_caliper", "brake_pad", "brake_rotor", "vacuum_brake_booster", "coil_spring", "leaf_spring",
+    "lower_control_arm", "idler_arm",
+]
+
+# The user's powertrain definition (engine -> transmission/clutch -> driveline -> EV), restricted to what open
+# data supports today. Driveline (driveshaft, u_joint, cv_joint, differential, axle, hub, transfer_case),
+# flywheel, timing components, valve_body and EV traction parts have NO open datasets yet — see docs/datasets.md.
+POWERTRAIN_CORE_CLASSES: list[str] = [
+    "engine_block", "cylinder_head", "piston", "connecting_rod", "crankshaft", "camshaft", "engine_valve",
+    "valve_lifter", "oil_pan", "transmission", "torque_converter", "clutch_plate", "pressure_plate", "gear",
+]
+POWERTRAIN_ACCESSORY_CLASSES: list[str] = [
+    "starter", "alternator", "water_pump", "fuel_injector", "carburetor", "spark_plug", "ignition_coil",
+    "distributor", "thermostat", "oil_filter", "oil_pressure_sensor", "oxygen_sensor",
+]
+POWERTRAIN_MISSING_CLASSES: list[str] = [  # wanted, no open data found (Sept 2026) — needs collection/labelling
+    "flywheel_flexplate", "timing_chain_belt", "gearset", "valve_body", "transfer_case", "driveshaft",
+    "universal_joint", "cv_joint", "differential", "axle_shaft", "wheel_hub", "traction_motor",
+    "hv_battery_pack", "inverter",
+]
+
+_PARTS_CATALOG_ALIASES: dict[str, str] = {
+    "carberator": "carburetor", "headlights": "headlight", "taillights": "tail_light", "tail_lights": "tail_light",
+    "cam_shaft": "camshaft", "crank_shaft": "crankshaft", "connecting_rods": "connecting_rod",
+    "gears": "gear", "gear_large": "gear", "clutch": "clutch_plate", "a_c_compressor": "air_compressor",
+    "ac_compressor": "air_compressor", "engine_valves": "engine_valve", "pistons": "piston",
+}
+
+
 def snake(name: str) -> str:
     s = re.sub(r"[^0-9a-zA-Z]+", "_", str(name).strip()).strip("_").lower()
     return re.sub(r"_+", "_", s)
@@ -96,3 +143,24 @@ def engine_bay_class_map(names: list[str], drop_unknown: bool = True) -> dict[st
             canon = snake(n)
         out[n] = canon
     return out
+
+
+def normalize_parts_catalog_name(name: str) -> str | None:
+    """Map any spelling of an isolated-part class ("CARBERATOR", "Cam-Shaft", "Connecting_rod") onto
+    :data:`PARTS_CATALOG_CLASSES`; ``None`` when it is not part of the taxonomy."""
+    s = snake(name)
+    s = _PARTS_CATALOG_ALIASES.get(s, s)
+    return s if s in PARTS_CATALOG_CLASSES else None
+
+
+def parts_catalog_class_map(names: list[str], drop_unknown: bool = True) -> dict[str, str | None]:
+    out: dict[str, str | None] = {}
+    for n in names:
+        canon = normalize_parts_catalog_name(n)
+        if canon is None and not drop_unknown:
+            canon = snake(n)
+        out[n] = canon
+    return out
+
+
+TAXONOMY_MAPS = {"engine_bay": engine_bay_class_map, "parts_catalog": parts_catalog_class_map}

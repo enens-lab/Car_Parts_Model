@@ -1,0 +1,25 @@
+# POWERTRAIN component identification (classification): 26-class subset of parts_catalog_cls.
+name: powertrain_cls
+task: classification
+description: Engine internals + transmission/clutch + engine accessories, isolated-part photos (26 classes).
+sources:
+  - name: rf_used_auto_parts_50
+    class_map: parts_catalog
+  - name: rf_engine_internals_383
+    class_map: parts_catalog
+  - name: rf_engine_internals_129
+    class_map: parts_catalog
+split:
+  strategy: grouped
+  fractions: {train: 0.8, val: 0.1, test: 0.1}
+  seed: 2026
+  dedupe_hash: true
+keep_classes: [engine_block, cylinder_head, piston, connecting_rod, crankshaft, camshaft, engine_valve,
+               valve_lifter, oil_pan, transmission, torque_converter, clutch_plate, pressure_plate, gear,
+               starter, alternator, water_pump, fuel_injector, carburetor, spark_plug, ignition_coil, distributor,
+               thermostat, oil_filter, oil_pressure_sensor, oxygen_sensor]
+classes: [engine_block, cylinder_head, piston, connecting_rod, crankshaft, camshaft, engine_valve, valve_lifter,
+          oil_pan, transmission, torque_converter, clutch_plate, pressure_plate, gear,
+          starter, alternator, water_pump, fuel_injector, carburetor, spark_plug, ignition_coil, distributor,
+          thermostat, oil_filter, oil_pressure_sensor, oxygen_sensor]
+min_instances_per_class: 0

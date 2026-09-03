@@ -81,8 +81,8 @@ def _load_named_yaml(kind: str, name_or_path: str | Path) -> dict[str, Any]:
 def load_recipe(name_or_path: str | Path) -> dict[str, Any]:
     r = _load_named_yaml("recipes", name_or_path)
     r.setdefault("task", "detection")
-    if r["task"] not in ("detection", "segmentation"):
-        raise ValueError(f"recipe.task must be detection|segmentation, got {r['task']!r}")
+    if r["task"] not in ("detection", "segmentation", "classification"):
+        raise ValueError(f"recipe.task must be detection|segmentation|classification, got {r['task']!r}")
     split = r.setdefault("split", {})
     split.setdefault("strategy", "grouped")
     split.setdefault("fractions", {"train": 0.8, "val": 0.1, "test": 0.1})

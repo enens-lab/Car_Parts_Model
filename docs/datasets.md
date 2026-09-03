@@ -18,6 +18,43 @@ assembled by *recipes* (`configs/recipes/*.yaml`) into `data/processed/<recipe>/
 Partially-labelled sets are excluded from the default recipes because a detector trained on them learns that
 every *unlabelled* component is background. Enable them only for a class subset you actually want.
 
+## Powertrain / isolated-part sources
+
+Powertrain internals (pistons, crankshafts, camshafts, clutches, torque converters, gearboxes) are not visible in
+engine-bay photos; open data for them exists only as **isolated-part photos** (catalog, used-parts listings,
+workbench). That is the framing of `parts_catalog_det` / `powertrain_det`: "what component is this photo of?",
+answered with a box so several parts on a bench still work.
+
+| Key | What | Images | Classes | License | Notes |
+|---|---|---|---|---|---|
+| `rf_used_auto_parts_50` | Roboflow "car parts" (Used auto parts classification), v2 | 8,694 | 50 | **Public Domain** | same taxonomy as Kaggle `gpiosenka/car-parts-40-classes` (Apache 2.0, 224 px, 40 classes) — the Roboflow copy adds boxes and 10 classes |
+| `rf_engine_internals_383` | Roboflow "Engine Parts" (engineparts), v1 | 383 (1,071 augmented) | 5 | CC BY 4.0 | camshaft, connecting rod, piston, crankshaft, cylinder head |
+| `rf_engine_internals_129` | Roboflow "engine parts" (project-tevws), v1 | 129 (309 augmented) | 4 | CC BY 4.0 | camshaft, piston, connecting rod, gear |
+
+Rejected: `car-parts-jv0or/car-parts-detection-owvwe` (10 classes incl. crankshaft/clutch plate, 1,670 images) —
+license field **Private**; `clutch/clutch-detecton` — Good/Bad defect labels, not identity; the LSCP paper
+(84k images, 12 classes, CC BY 4.0) has no public download. Candidates not yet pulled: Kaggle
+`stevenalbert15/toyota-corolla-car-parts` (Apache 2.0, 5.5 GB, phone photos per class) and the Zenodo
+"Battery Image Dataset for EV Circularity Research" (CC BY 4.0, 5.4 GB, 19 EV battery types).
+
+Built recipes (grouped split, seed 2026; classification layouts drop the few images carrying two classes):
+
+| Recipe | train / valid / test images | Classes |
+|---|---|---|
+| `parts_catalog_det` / `parts_catalog_cls` | 8,058 / 1,008 / 1,008 (cls: 8,030 / 1,005 / 1,007) | 52 |
+| `powertrain_det` / `powertrain_cls` | 4,473 / 541 / 543 (cls: 4,467 / 541 / 543) | 26 |
+
+### Powertrain gap list (no open data found, Sept 2026)
+
+flywheel / flexplate · timing chain/belt & tensioners · gearsets · valve body & solenoids · transfer case ·
+driveshaft · universal joints · CV joints · differential · axle shafts & wheel hubs · EV traction motor ·
+HV battery pack (Zenodo set is the exception) · inverter / power electronics.
+
+Plan: collect 150–300 photos per class (own workshop photos, salvage yards, permissively licensed catalog images),
+label boxes in Roboflow, and register the project as one more `RoboflowSource(taxonomy="parts_catalog")` — the
+recipes pick it up without code changes. Labelling can be bootstrapped with an open-vocabulary detector
+(Grounding DINO, Apache-2.0) and reviewed by a human.
+
 ## The carparts-seg leakage problem
 
 The public split shipped with carparts-seg (3,156 / 401 / 276) is built from Roboflow *augmented copies*: each of

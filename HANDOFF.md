@@ -32,8 +32,22 @@ Mechanics:
   `exterior_seg_clean` 3,067 / 383 / 383 (13), `engine_bay_det` 2,810 / 352 / 352 (26), `unified_det`
   5,877 / 735 / 735 (49) — all with **0 cross-split photo groups**. Reports in `artifacts/data_reports/`.
 - Proof-of-concept `poc_exterior_seg_nano` (rfdetr-seg-nano @312, 12 epochs, in-process data loading) — see scoreboard.
+- **Powertrain track added (2026-09-03 pm).** Open data for engine internals / clutch / transmission exists only as
+  isolated-part photos (Public Domain 50-class set + two CC BY 4.0 engine-internals sets; the 50-class "boxes"
+  are whole-image), so the primary model is a **ConvNeXt classifier** (`powertrain_cls`, 26 classes;
+  `parts_catalog_cls`, 52) with RF-DETR `*_det` twins for multi-part scenes. Driveline and EV traction parts have
+  **no open data** — gap list and collection plan in `docs/datasets.md`.
+- Datasets: `parts_catalog_cls/det` 8,030 / 1,005 / 1,007 images (52 classes), `powertrain_cls/det`
+  4,467 / 541 / 543 (26 classes); 0 cross-split photo groups.
 
-**Scoreboard** (frozen grouped split, seed 2026; test = 383 exterior photos)
+**Scoreboard — isolated-part classification** (frozen grouped split; test = held-out photos)
+
+| Run | Model | Recipe | Epochs | best val top-1 | **test top-1 / top-5 / macro** | Wall-clock | Notes |
+|---|---|---|---|---|---|---|---|
+| `poc_powertrain_cls` | convnext_tiny @224 | powertrain_cls (26) | 15 | 0.982 | **0.969 / 0.998 / 0.972** (n=543) | 19 min | laptop; weakest: distributor 0.78 (n=9), crankshaft 0.86 (→camshaft ×6) |
+| `poc_parts_catalog_cls` | convnext_tiny @224 | parts_catalog_cls (52) | 15 | _running_ | _see artifacts/runs/poc_parts_catalog_cls/summary.json_ | ~40 min | laptop |
+
+**Scoreboard — exterior segmentation** (frozen grouped split, seed 2026; test = 383 exterior photos)
 
 | Run | Model | Data | Epochs | val mask mAP (best) | test bbox AP / AP50 | test mask AP / AP50 | Wall-clock | Where |
 |---|---|---|---|---|---|---|---|---|
@@ -79,6 +93,11 @@ uv run python scripts/train.py --recipe engine_bay_det --config rfdetr_48gb --mo
 # 3. side-agnostic exterior taxonomy (product decision pending: 23 vs 13 classes)
 uv run python scripts/train.py --recipe exterior_seg_clean --config rfdetr_48gb --name exterior_clean_xl
 
+# 3b. isolated-part identification (powertrain + full catalog) — classifier, minutes not hours
+uv run python scripts/train.py --recipe powertrain_cls    --config classifier_48gb --name powertrain_cls_b
+uv run python scripts/train.py --recipe parts_catalog_cls --config classifier_48gb --name parts_catalog_cls_b
+uv run python scripts/train.py --recipe powertrain_det    --config rfdetr_48gb --model rfdetr-large --name powertrain_det_l   # optional: boxes for benches
+
 # 4. optional AGPL benchmark for the model-selection memo (never ship its outputs)
 uv sync --extra baseline-agpl && uv run python scripts/baseline_ultralytics.py --recipe exterior_seg --model yolo26m-seg.pt --epochs 100 --i-accept-agpl
 
@@ -117,6 +136,12 @@ After each run: commit `artifacts/runs/<run>/summary.json` + `eval_test.json`, a
   `object`. Consider `min_instances_per_class` once the production baseline is in.
 - Rarest engine-bay classes (`atf_oil_reservoir` 3, `oil_filter` 15, `secondary_coolant_reservoir` 24) will
   score ~0 AP until more photos exist.
+- Powertrain classifier: crankshaft↔camshaft is the main confusion (both long shafts with lobes/journals; 224 px
+  catalog crops). Higher resolution (`classifier_48gb` uses 288) and the engine-internals photos help; more
+  real-world (non-catalog) photos of both parts would help most.
+- Powertrain gap list (no open data): flywheel/flexplate, timing components, gearsets, valve body, transfer case,
+  driveshaft, U-/CV joints, differential, axles/hubs, EV traction motor, HV battery pack (Zenodo CC BY 4.0 set is
+  a candidate), inverter. Collect + label in Roboflow, register as `RoboflowSource(taxonomy="parts_catalog")`.
 - Ideas ported from the knee-MRI project once baselines exist: multi-seed rank ensembles, long-schedule check,
   pseudo-labelling unlabelled engine-bay photos with the best model (noisy student), SAM-2 pseudo-masks for
   engine-bay boxes to unlock a unified segmentation model.

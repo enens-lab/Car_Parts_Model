@@ -28,6 +28,18 @@ Apache-2.0. The accuracy gap to the best AGPL/PML options is a few AP points at 
 | `exterior_seg` (23 classes, masks) | `rfdetr-seg-medium` on 8 GB, `rfdetr-seg-xlarge` on one RTX 6000 Ada (GPU 3 of the shared box) | pixel masks for exterior parts (damage/repair workflows) |
 | `engine_bay_det` (26 classes, boxes) | `rfdetr-medium` / `rfdetr-large` | box-only labels exist for the engine bay |
 | `unified_det` (49 classes, boxes) | `rfdetr-large` | one model when deployment simplicity beats exterior masks |
+| `powertrain_cls` (26) / `parts_catalog_cls` (52) | **ConvNeXt-Tiny/Base classifier** (torchvision, BSD-3) | isolated-part photos: "what component is this?" |
+| `powertrain_det` / `parts_catalog_det` | `rfdetr-medium` / `rfdetr-large` | same photos as boxes, for benches with several parts |
+
+### Why a classifier for powertrain parts
+
+The only open data for engine internals, clutches, torque converters and gearboxes are **isolated-part photos**
+(catalog / used-parts listings): one component per image, and in the 8.7k-image Public Domain set every "box" is
+the whole image (224 px). A detector trained on that learns "box = image" and adds nothing over a classifier; a
+classifier is smaller, trains in minutes on the laptop, and gives calibrated top-k answers — what a "photograph the
+part, get its name" feature needs. ConvNeXt weights and code are BSD-3 (torchvision); EfficientNet-V2 is an
+alternative arch. The `*_det` variants remain for the ~500 engine-internals photos with real boxes and for future
+workbench scenes with several parts.
 
 ## Lessons carried over from the knee-MRI pipeline (`enens-lab/knee_abnormality_detection`)
 

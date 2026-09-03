@@ -7,6 +7,12 @@ Two model families from one canonical data pipeline, built for a **commercial pr
 | `exterior_seg` | instance segmentation | 23 exterior body parts (bumpers, doors, lights, hood, mirrors, wheels, …) | carparts-seg (CC BY 4.0) |
 | `engine_bay_det` | detection | 26 engine-bay components (battery, fuse box, reservoirs, dipsticks, filters, …) | Kaggle engine bay (MIT) + Roboflow re-labelling (MIT) |
 | `unified_det` | detection | 49 = both taxonomies, boxes only | all of the above |
+| `powertrain_cls` / `powertrain_det` | classification (primary) / detection, isolated-part photos | 26 powertrain classes: engine block, cylinder head, piston, connecting rod, crankshaft, camshaft, engine valve, valve lifter, oil pan, transmission, torque converter, clutch plate, pressure plate, gear + 12 engine accessories | Roboflow 50-class set (Public Domain) + two CC BY 4.0 engine-internals sets |
+| `parts_catalog_cls` / `parts_catalog_det` | classification / detection, isolated-part photos | all 52 components incl. brakes, suspension, electrical, body | same |
+
+Powertrain internals only exist as isolated-part photos in open data; driveline (driveshaft, CV joints,
+differential, axles) and EV traction parts have no open datasets yet — see the gap list in
+[docs/datasets.md](docs/datasets.md).
 
 Detector: **RF-DETR** (Roboflow, ICLR 2026) — Apache-2.0 code *and* weights, DINOv2 backbone, real-time, native
 ONNX/TensorRT export. Ultralytics YOLO was rejected for the product because it is AGPL-3.0 (it survives only as an
@@ -29,6 +35,7 @@ uv run python scripts/smoke_test.py
 # 4. train / evaluate / predict / export
 uv run python scripts/train.py    --recipe exterior_seg   --config rfdetr_8gb --name exterior_seg_m
 uv run python scripts/train.py    --recipe engine_bay_det --config rfdetr_8gb --model rfdetr-medium --name engine_bay_m
+uv run python scripts/train.py    --recipe powertrain_cls --config classifier_8gb --name powertrain_cls   # isolated-part classifier
 uv run python scripts/evaluate.py --run exterior_seg_m                       # per-class AP table (test split)
 uv run python scripts/predict.py  --run exterior_seg_m --run engine_bay_m --source photo.jpg
 uv run python scripts/export.py   --run exterior_seg_m --format onnx --verify photo.jpg
@@ -69,8 +76,10 @@ src/carparts/
   data/recipe.py             recipe -> processed dataset + dataset card + NOTICE
   sources/                   downloadable sources with license/attribution metadata (registry)
   train/rfdetr_trainer.py    RF-DETR fine-tuning wrapper, model registry (permissive variants only), summaries
+  train/classifier.py        ConvNeXt/EfficientNet classifier for isolated-part photos (+ eval, ONNX export)
   eval/coco_eval.py          per-class COCO AP (bbox + segm) for any checkpoint/split
   infer/predictor.py         CarPartsModel / CarPartsPipeline -> JSON objects (label, confidence, bbox, polygon)
+  infer/classifier.py        CarPartsClassifier -> top-k labels for a photo of one component
 scripts/                     prepare_data, train, evaluate, predict, export, smoke_test, baseline_ultralytics (AGPL), remote_setup.sh
 app/                         FastAPI demo server + single-page UI
 tests/                       unit tests (no GPU, no downloads)

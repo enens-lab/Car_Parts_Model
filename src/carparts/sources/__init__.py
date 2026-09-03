@@ -65,4 +65,44 @@ registry.register(RoboflowSource(
     taxonomy="engine_bay",
 ))
 
+# Isolated-part ("parts catalog") photos — the data behind powertrain component recognition.
+registry.register(RoboflowSource(
+    name="rf_used_auto_parts_50",
+    workspace="used-auto-parts-classification", project="car-parts-ybiev-whary", version=2,
+    info=SourceInfo(
+        title="car parts (Used auto parts classification) — 50 isolated-part classes", license="Public Domain",
+        url="https://universe.roboflow.com/used-auto-parts-classification/car-parts-ybiev-whary",
+        attribution="Used auto parts classification, 'car parts Dataset', Roboflow Universe, 2024 (Public Domain).",
+        notes="8,694 catalog-style photos, one part per image, 50 classes incl. engine block, cylinder head, "
+              "camshaft, crankshaft, piston, engine valve, valve lifter, torque converter, clutch/pressure plate, "
+              "transmission. Same taxonomy as Kaggle gpiosenka/car-parts-40-classes (Apache 2.0).",
+    ),
+    taxonomy="parts_catalog",
+))
+registry.register(RoboflowSource(
+    name="rf_engine_internals_383",
+    workspace="engineparts", project="engine-parts-c2xfb", version=1,
+    info=SourceInfo(
+        title="Engine Parts (engineparts) — cam/crank/rods/pistons/heads", license="CC-BY-4.0",
+        url="https://universe.roboflow.com/engineparts/engine-parts-c2xfb",
+        attribution="engineparts, 'Engine Parts Dataset', Roboflow Universe, Oct 2024 (CC BY 4.0).",
+        notes="383 photos, 5 classes (Cam-Shaft, Connecting_rod, Piston, Crank-shaft, Cylinder-head); v1 export is "
+              "3x augmented (1,071 images) — copies are folded by the photo grouping.",
+    ),
+    taxonomy="parts_catalog",
+))
+registry.register(RoboflowSource(
+    name="rf_engine_internals_129",
+    workspace="project-tevws", project="engine-parts-iejh6", version=1,
+    info=SourceInfo(
+        title="engine parts (project-tevws) — camshaft/piston/connecting rod/gear", license="CC-BY-4.0",
+        url="https://universe.roboflow.com/project-tevws/engine-parts-iejh6",
+        attribution="project-tevws, 'engine parts Dataset', Roboflow Universe, Jul 2023 (CC BY 4.0).",
+        notes="129 photos, 4 classes; v1 export is 3x augmented (309 images).",
+    ),
+    taxonomy="parts_catalog",
+))
+# NOT registered: car-parts-jv0or/car-parts-detection-owvwe (10 classes incl. crankshaft/clutch plate) — license
+# field is 'Private'; clutch/clutch-detecton — defect Good/Bad labels, not part identity.
+
 __all__ = ["Source", "SourceInfo", "registry"]

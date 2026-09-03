@@ -22,7 +22,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from ..constants import engine_bay_class_map
+from ..constants import TAXONOMY_MAPS
 from ..sources import registry
 from .coco import CocoDataset
 from .splits import grouped_split, merge_duplicate_groups, report
@@ -46,8 +46,8 @@ def _link_or_copy(src: Path, dst: Path) -> None:
 def _resolve_class_map(spec: Any, ds: CocoDataset) -> dict[str, str | None] | None:
     if spec in (None, {}, ""):
         return None
-    if spec == "engine_bay":
-        return engine_bay_class_map(ds.class_names, drop_unknown=True)
+    if isinstance(spec, str) and spec in TAXONOMY_MAPS:
+        return TAXONOMY_MAPS[spec](ds.class_names, drop_unknown=True)
     if isinstance(spec, dict):
         return {str(k): (None if v is None else str(v)) for k, v in spec.items()}
     raise ValueError(f"unsupported class_map spec: {spec!r}")
@@ -150,7 +150,15 @@ def assemble(recipe: dict[str, Any], loaded: dict[str, dict[str, CocoDataset]]) 
     else:
         raise ValueError(f"unknown split strategy {strategy!r}")
 
-    # optional fixed class order / rare-class pruning (applied identically to every split)
+    # optional class subset / fixed class order / rare-class pruning (applied identically to every split)
+    if recipe.get("keep_classes"):
+        keep = set(recipe["keep_classes"])
+        drop = {n: None for d in merged.values() for n in d.class_names if n not in keep}
+        merged = {s: d.remap_classes(drop) for s, d in merged.items()}
+        # drop images that lost every annotation (pure background would dominate a subset recipe)
+        for s, d in merged.items():
+            with_ann = {a.image_id for a in d.annotations}
+            merged[s] = d.subset(with_ann)
     if recipe.get("classes"):
         merged = {s: d.remap_classes(keep_order=recipe["classes"]) for s, d in merged.items()}
     min_inst = int(recipe.get("min_instances_per_class") or 0)
@@ -173,9 +181,25 @@ def write_processed(recipe: dict[str, Any], splits: dict[str, CocoDataset], out_
     if out.exists():
         shutil.rmtree(out)
     used_sources = sorted({im.source for d in splits.values() for im in d.images})
+    cls_dropped = 0
     for split, ds in splits.items():
         d = out / SPLIT_DIRS[split]
         d.mkdir(parents=True, exist_ok=True)
+        if recipe["task"] == "classification":
+            # torchvision ImageFolder layout: <split>/<class>/<image>; one label per image
+            cats = ds.cat_by_id
+            anns = ds.anns_by_image()
+            for im in ds.images:
+                labels = {cats[a.category_id].name for a in anns.get(im.id, [])}
+                if len(labels) != 1:
+                    cls_dropped += 1
+                    continue
+                cdir = d / _safe(labels.pop())
+                cdir.mkdir(exist_ok=True)
+                _link_or_copy(Path(im.orig_path), cdir / _safe(f"{im.source}__{im.file_name}"))
+            for c in ds.categories:  # keep every class folder so ImageFolder indices match across splits
+                (d / _safe(c.name)).mkdir(exist_ok=True)
+            continue
         new_names: dict[int, str] = {}
         for im in ds.images:
             new_names[im.id] = _safe(f"{im.source}__{im.file_name}")
@@ -183,6 +207,9 @@ def write_processed(recipe: dict[str, Any], splits: dict[str, CocoDataset], out_
         ds.info.update({"description": f"carparts recipe {recipe['name']} / {split}",
                         "licenses": [registry.get(s).info.to_dict() for s in used_sources]})
         ds.save_json(d / "_annotations.coco.json", file_name_fn=lambda im: new_names[im.id])
+    if cls_dropped:
+        print(f"[recipe] classification layout: dropped {cls_dropped} images without exactly one class")
+        split_report = {**split_report, "classification_images_dropped": cls_dropped}
     card = {
         "recipe": {k: v for k, v in recipe.items() if not k.startswith("_")},
         "created": _dt.datetime.now().isoformat(timespec="seconds"),

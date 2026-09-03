@@ -1,0 +1,11 @@
+# Isolated-part classifier on the 8 GB laptop: ConvNeXt-Tiny (torchvision, BSD-3), 224 px, ~10 min for 8.5k images.
+model: convnext_tiny         # convnext_tiny | convnext_small | convnext_base | efficientnet_v2_s
+epochs: 15
+batch_size: 64
+lr: 3.0e-4
+weight_decay: 0.05
+label_smoothing: 0.1
+resolution: 224
+warmup_epochs: 1
+num_workers: 0               # 16 GB RAM box: keep data loading in-process
+seed: 2026

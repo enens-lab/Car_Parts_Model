@@ -88,6 +88,41 @@ def test_detection_recipe_strips_masks_and_subsamples(tmp_path):
     assert total == 15  # 5 groups x 3 copies
 
 
+def test_keep_classes_subset_drops_other_classes_and_empty_images(tmp_path):
+    raw = tmp_path / "raw"
+    _build_raw(raw)
+    registry.register(_FakeSource(raw), replace=True)
+    recipe = _recipe("detection")
+    recipe["keep_classes"] = ["b"]
+    recipe["split"]["dedupe_hash"] = False
+    out = build_recipe(recipe, tmp_path / "rawroot", tmp_path / "processed", tmp_path / "reports", download=False)
+    total = 0
+    for split in ("train", "valid", "test"):
+        ds = CocoDataset.from_coco_json(out / split / "_annotations.coco.json")
+        assert ds.class_names == ["b"]
+        assert ds.stats()["images_without_annotations"] == 0
+        total += len(ds.images)
+    assert total == 18  # odd photo groups (g % 2 == 1) carry class b: 6 groups x 3 copies
+
+
+def test_classification_recipe_writes_imagefolder_layout(tmp_path):
+    raw = tmp_path / "raw"
+    _build_raw(raw)
+    registry.register(_FakeSource(raw), replace=True)
+    recipe = _recipe("classification")
+    recipe["split"]["dedupe_hash"] = False
+    out = build_recipe(recipe, tmp_path / "rawroot", tmp_path / "processed", tmp_path / "reports", download=False)
+    total = 0
+    for split in ("train", "valid", "test"):
+        classes = sorted(p.name for p in (out / split).iterdir() if p.is_dir())
+        assert classes == ["a", "b"]  # every class folder exists in every split
+        assert not (out / split / "_annotations.coco.json").exists()
+        total += sum(len(list((out / split / c).glob("*.jpg"))) for c in classes)
+    assert total == 36
+    card = json.loads((out / "dataset_card.json").read_text(encoding="utf-8"))
+    assert card["task"] == "classification" and card["classes"] == ["a", "b"]
+
+
 def test_class_map_merge_via_recipe(tmp_path):
     raw = tmp_path / "raw"
     _build_raw(raw)

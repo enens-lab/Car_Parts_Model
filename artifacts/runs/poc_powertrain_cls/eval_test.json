@@ -1,0 +1,166 @@
+{
+ "checkpoint": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\artifacts\\runs\\poc_powertrain_cls\\classifier_best.pth",
+ "split": "test",
+ "n": 543,
+ "top1": 0.968692421913147,
+ "top5": 0.9981583952903748,
+ "macro_acc": 0.9716013349019564,
+ "per_class": {
+  "alternator": {
+   "n": 15,
+   "acc": 0.9333333373069763
+  },
+  "camshaft": {
+   "n": 53,
+   "acc": 0.9811320900917053
+  },
+  "carburetor": {
+   "n": 27,
+   "acc": 0.9629629850387573
+  },
+  "clutch_plate": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "connecting_rod": {
+   "n": 24,
+   "acc": 0.9583333134651184
+  },
+  "crankshaft": {
+   "n": 49,
+   "acc": 0.8571428656578064
+  },
+  "cylinder_head": {
+   "n": 26,
+   "acc": 1.0
+  },
+  "distributor": {
+   "n": 9,
+   "acc": 0.7777777910232544
+  },
+  "engine_block": {
+   "n": 14,
+   "acc": 0.9285714030265808
+  },
+  "engine_valve": {
+   "n": 13,
+   "acc": 1.0
+  },
+  "fuel_injector": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "gear": {
+   "n": 3,
+   "acc": 1.0
+  },
+  "ignition_coil": {
+   "n": 21,
+   "acc": 0.9523809552192688
+  },
+  "oil_filter": {
+   "n": 16,
+   "acc": 1.0
+  },
+  "oil_pan": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "oil_pressure_sensor": {
+   "n": 18,
+   "acc": 1.0
+  },
+  "oxygen_sensor": {
+   "n": 16,
+   "acc": 1.0
+  },
+  "piston": {
+   "n": 48,
+   "acc": 1.0
+  },
+  "pressure_plate": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "spark_plug": {
+   "n": 18,
+   "acc": 1.0
+  },
+  "starter": {
+   "n": 20,
+   "acc": 0.949999988079071
+  },
+  "thermostat": {
+   "n": 11,
+   "acc": 1.0
+  },
+  "torque_converter": {
+   "n": 20,
+   "acc": 1.0
+  },
+  "transmission": {
+   "n": 25,
+   "acc": 0.9599999785423279
+  },
+  "valve_lifter": {
+   "n": 21,
+   "acc": 1.0
+  },
+  "water_pump": {
+   "n": 16,
+   "acc": 1.0
+  }
+ },
+ "top_confusions": [
+  {
+   "true": "crankshaft",
+   "pred": "camshaft",
+   "count": 6
+  },
+  {
+   "true": "alternator",
+   "pred": "transmission",
+   "count": 1
+  },
+  {
+   "true": "camshaft",
+   "pred": "oxygen_sensor",
+   "count": 1
+  },
+  {
+   "true": "carburetor",
+   "pred": "water_pump",
+   "count": 1
+  },
+  {
+   "true": "connecting_rod",
+   "pred": "cylinder_head",
+   "count": 1
+  },
+  {
+   "true": "crankshaft",
+   "pred": "cylinder_head",
+   "count": 1
+  },
+  {
+   "true": "distributor",
+   "pred": "thermostat",
+   "count": 1
+  },
+  {
+   "true": "distributor",
+   "pred": "water_pump",
+   "count": 1
+  },
+  {
+   "true": "engine_block",
+   "pred": "cylinder_head",
+   "count": 1
+  },
+  {
+   "true": "ignition_coil",
+   "pred": "distributor",
+   "count": 1
+  }
+ ]
+}

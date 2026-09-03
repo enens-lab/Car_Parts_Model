@@ -41,9 +41,11 @@ def create_app(checkpoints: dict[str, Path], threshold: float = 0.5):
     from PIL import Image, ImageOps
 
     from carparts.infer import CarPartsModel
+    from carparts.infer.classifier import CarPartsClassifier, is_classifier_checkpoint
 
     t0 = time.time()
-    models = {tag: CarPartsModel(ck, tag=tag, threshold=threshold) for tag, ck in checkpoints.items()}
+    models = {tag: (CarPartsClassifier(ck, tag=tag) if is_classifier_checkpoint(ck)
+                    else CarPartsModel(ck, tag=tag, threshold=threshold)) for tag, ck in checkpoints.items()}
     load_seconds = round(time.time() - t0, 1)
 
     app = FastAPI(title="carparts demo", version=carparts.__version__)
@@ -64,6 +66,13 @@ def create_app(checkpoints: dict[str, Path], threshold: float = 0.5):
         canvas = rgb
         for tag, m in models.items():
             t = time.time()
+            if isinstance(m, CarPartsClassifier):
+                objs = m.predict_objects(rgb, threshold=thr)
+                result["timings_ms"][tag] = round((time.time() - t) * 1000, 1)
+                result["objects"] += objs
+                if draw:
+                    canvas = m.annotate(canvas, objs)
+                continue
             pred = m.predict(rgb, threshold=thr)
             result["timings_ms"][tag] = round((time.time() - t) * 1000, 1)
             result["objects"] += pred.to_dict()["objects"]
@@ -81,7 +90,9 @@ def create_app(checkpoints: dict[str, Path], threshold: float = 0.5):
         import torch
         return {"status": "ok", "device": "cuda" if torch.cuda.is_available() else "cpu",
                 "models": {tag: {"checkpoint": m.checkpoint, "classes": len(m.class_names),
-                                 "segmentation": m.is_segmentation} for tag, m in models.items()},
+                                 "segmentation": bool(m.is_segmentation),
+                                 "kind": "classifier" if isinstance(m, CarPartsClassifier) else "detector"}
+                           for tag, m in models.items()},
                 "load_seconds": load_seconds, "torch": torch.__version__}
 
     @app.get("/classes")
@@ -115,11 +126,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--threshold", type=float, default=0.5)
     args = ap.parse_args(argv)
 
-    from carparts.train.rfdetr_trainer import best_checkpoint
+    from carparts.train.rfdetr_trainer import resolve_run_checkpoint
     paths = load_paths()
     ckpts: dict[str, Path] = {}
     for run in args.run or []:
-        ckpts[run] = best_checkpoint(paths.runs / run / "rfdetr")
+        ckpts[run] = resolve_run_checkpoint(paths.runs / run)
     for i, ck in enumerate(args.checkpoint or []):
         ckpts[f"model{i}" if ckpts else "model"] = Path(ck)
     if not ckpts:

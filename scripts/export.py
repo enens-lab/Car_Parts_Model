@@ -17,7 +17,9 @@ from pathlib import Path
 import numpy as np
 
 from carparts.config import load_paths
-from carparts.train.rfdetr_trainer import best_checkpoint, load_checkpoint
+from carparts.infer.classifier import is_classifier_checkpoint
+from carparts.train.classifier import export_classifier_onnx
+from carparts.train.rfdetr_trainer import load_checkpoint, resolve_run_checkpoint
 
 MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
 STD = np.array([0.229, 0.224, 0.225], dtype=np.float32)
@@ -55,7 +57,7 @@ def main(argv: list[str] | None = None) -> int:
 
     paths = load_paths().ensure()
     if args.run:
-        ckpt = best_checkpoint(paths.runs / args.run / "rfdetr")
+        ckpt = resolve_run_checkpoint(paths.runs / args.run)
         out = Path(args.out) if args.out else paths.exports / args.run
     elif args.checkpoint:
         ckpt = Path(args.checkpoint)
@@ -63,6 +65,19 @@ def main(argv: list[str] | None = None) -> int:
     else:
         ap.error("give --run or --checkpoint")
     out.mkdir(parents=True, exist_ok=True)
+
+    if is_classifier_checkpoint(ckpt):
+        if args.format != "onnx":
+            ap.error("classifier checkpoints export to ONNX only")
+        path = export_classifier_onnx(ckpt, out, opset=args.opset)
+        import onnxruntime as ort
+        sess = ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
+        inp = sess.get_inputs()[0]
+        res = json.loads((out / "preprocess.json").read_text())["center_crop"]
+        logits = sess.run(None, {inp.name: np.random.rand(1, 3, res, res).astype(np.float32)})[0]
+        print(f"[export] {path.name} ({path.stat().st_size / 1e6:.1f} MB) logits shape {list(logits.shape)} finite={bool(np.isfinite(logits).all())}")
+        print(f"-> {out}")
+        return 0
 
     model = load_checkpoint(ckpt)
     resolution = int(getattr(model.model_config, "resolution", 0) or 0)

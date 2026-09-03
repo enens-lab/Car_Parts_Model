@@ -23,7 +23,8 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--recipe", required=True)
     ap.add_argument("--config", default="rfdetr_8gb", help="configs/train/<name>.yaml")
-    ap.add_argument("--model", choices=sorted(MODEL_REGISTRY), help="override the config's model")
+    ap.add_argument("--model", help=f"override the config's model: {sorted(MODEL_REGISTRY)} for detection/segmentation "
+                                    "recipes, a torchvision arch (convnext_tiny, ...) for classification recipes")
     ap.add_argument("--name", help="run name (default: <recipe>_<model>_<timestamp>)")
     ap.add_argument("--epochs", type=int)
     ap.add_argument("--batch-size", type=int, dest="batch_size")
@@ -39,11 +40,28 @@ def main(argv: list[str] | None = None) -> int:
     cfg = load_train_config(args.config)
     model = args.model or cfg["model"]
     name = args.name or f"{args.recipe}_{model}_{dt.datetime.now():%Y%m%d-%H%M}"
+    paths = load_paths().ensure()
+
+    import json
+    card = paths.processed / args.recipe / "dataset_card.json"
+    task = json.loads(card.read_text(encoding="utf-8"))["task"] if card.exists() else "detection"
+    if task == "classification":
+        from carparts.train.classifier import ARCHS, train_classifier
+        if model not in ARCHS:
+            ap.error(f"classification recipes need a classifier arch ({sorted(ARCHS)}), got {model!r}; "
+                     f"use --config classifier_8gb / classifier_48gb")
+        overrides = {"model": model, "epochs": args.epochs, "batch_size": args.batch_size, "resolution": args.resolution,
+                     "lr": args.lr, "num_workers": args.num_workers, "seed": args.seed}
+        summary = train_classifier(paths, args.recipe, cfg, name, overrides)
+        tm = summary["test_metrics"]
+        print(f"[train] test top1={tm['top1']:.4f} top5={tm['top5']:.4f} macro_acc={tm['macro_acc']:.4f}")
+        return 0
+
     overrides = {"model": model, "epochs": args.epochs, "batch_size": args.batch_size,
                  "grad_accum_steps": args.grad_accum_steps, "resolution": args.resolution, "lr": args.lr,
                  "num_workers": args.num_workers, "seed": args.seed,
                  "devices": (int(args.devices) if args.devices and args.devices.isdigit() else args.devices)}
-    summary = train_run(load_paths().ensure(), args.recipe, cfg, name, overrides, resume=args.resume)
+    summary = train_run(paths, args.recipe, cfg, name, overrides, resume=args.resume)
     tm = summary["test_metrics"]
     for k, v in tm.items():
         print(f"[train] test {k}: AP={v['AP']:.3f} AP50={v['AP50']:.3f}")

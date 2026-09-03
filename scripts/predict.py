@@ -17,7 +17,8 @@ from pathlib import Path
 
 from carparts.config import load_paths
 from carparts.infer import CarPartsModel, CarPartsPipeline
-from carparts.train.rfdetr_trainer import best_checkpoint
+from carparts.infer.classifier import CarPartsClassifier, is_classifier_checkpoint
+from carparts.train.rfdetr_trainer import resolve_run_checkpoint
 
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 VID_EXTS = {".mp4", ".avi", ".mov", ".mkv"}
@@ -26,7 +27,7 @@ VID_EXTS = {".mp4", ".avi", ".mov", ".mkv"}
 def _resolve_checkpoints(args, paths) -> dict[str, Path]:
     out: dict[str, Path] = {}
     for run in args.run or []:
-        out[run] = best_checkpoint(paths.runs / run / "rfdetr")
+        out[run] = resolve_run_checkpoint(paths.runs / run)
     for ck in args.checkpoint or []:
         out[Path(ck).stem if len(out) else "model"] = Path(ck)
     return out
@@ -46,7 +47,9 @@ def main(argv: list[str] | None = None) -> int:
     ckpts = _resolve_checkpoints(args, paths)
     if not ckpts:
         ap.error("give at least one --run or --checkpoint")
-    models = {tag: CarPartsModel(ck, tag=tag, threshold=args.threshold) for tag, ck in ckpts.items()}
+    classifiers = {tag: CarPartsClassifier(ck, tag=tag) for tag, ck in ckpts.items() if is_classifier_checkpoint(ck)}
+    models = {tag: CarPartsModel(ck, tag=tag, threshold=args.threshold) for tag, ck in ckpts.items()
+              if tag not in classifiers}
     pipeline = CarPartsPipeline(models)
     src = Path(args.source)
     out = Path(args.out) if args.out else paths.artifacts / "predictions" / src.stem
@@ -64,6 +67,11 @@ def main(argv: list[str] | None = None) -> int:
             result["objects"] += pred.to_dict()["objects"]
             if not args.no_draw:
                 canvas = m.annotate(canvas, pred)
+        for tag, c in classifiers.items():
+            objs = c.predict_objects(rgb, threshold=args.threshold)
+            result["objects"] += objs
+            if not args.no_draw:
+                canvas = c.annotate(canvas, objs)
         (out / f"{path.stem}.json").write_text(json.dumps(result, indent=1), encoding="utf-8")
         if not args.no_draw:
             cv2.imwrite(str(out / f"{path.stem}.jpg"), cv2.cvtColor(canvas, cv2.COLOR_RGB2BGR))

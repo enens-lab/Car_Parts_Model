@@ -1,0 +1,221 @@
+{
+ "sources": {
+  "rf_used_auto_parts_50": {
+   "train": {
+    "images": 8520,
+    "images_without_annotations": 0,
+    "annotations": 8520,
+    "annotations_with_masks": 0,
+    "classes": 50,
+    "per_class": {
+     "idler_arm": 196,
+     "ignition_coil": 195,
+     "starter": 189,
+     "overflow_tank": 188,
+     "alternator": 188,
+     "carburetor": 187,
+     "oil_pan": 184,
+     "torque_converter": 183,
+     "side_mirror": 183,
+     "engine_block": 182,
+     "gas_cap": 182,
+     "air_compressor": 181,
+     "spoiler": 181,
+     "shift_knob": 181,
+     "oil_pressure_sensor": 180,
+     "fuel_injector": 179,
+     "radio": 179,
+     "clutch_plate": 179,
+     "thermostat": 179,
+     "brake_pad": 179,
+     "cylinder_head": 178,
+     "crankshaft": 178,
+     "oxygen_sensor": 177,
+     "battery": 176,
+     "valve_lifter": 174,
+     "pressure_plate": 174,
+     "rim": 173,
+     "brake_rotor": 173,
+     "vacuum_brake_booster": 173,
+     "radiator_hose": 173,
+     "window_regulator": 171,
+     "water_pump": 171,
+     "instrument_cluster": 171,
+     "brake_caliper": 170,
+     "oil_filter": 167,
+     "lower_control_arm": 165,
+     "fuse_box": 164,
+     "engine_valve": 163,
+     "radiator": 162,
+     "transmission": 160,
+     "radiator_fan": 158,
+     "tail_light": 157,
+     "camshaft": 154,
+     "headlight": 154,
+     "coil_spring": 153,
+     "spark_plug": 150,
+     "muffler": 146,
+     "distributor": 143,
+     "piston": 110,
+     "leaf_spring": 107
+    },
+    "sources": {
+     "rf_used_auto_parts_50": 8520
+    },
+    "groups": 8520
+   },
+   "val": {
+    "images": 174,
+    "images_without_annotations": 0,
+    "annotations": 174,
+    "annotations_with_masks": 0,
+    "classes": 50,
+    "per_class": {
+     "radio": 10,
+     "brake_pad": 9,
+     "shift_knob": 8,
+     "window_regulator": 8,
+     "radiator": 7,
+     "instrument_cluster": 7,
+     "fuel_injector": 6,
+     "rim": 5,
+     "cylinder_head": 5,
+     "carburetor": 5,
+     "oxygen_sensor": 5,
+     "oil_pressure_sensor": 5,
+     "pressure_plate": 5,
+     "water_pump": 5,
+     "engine_block": 5,
+     "ignition_coil": 5,
+     "spark_plug": 4,
+     "headlight": 4,
+     "air_compressor": 4,
+     "gas_cap": 4,
+     "starter": 3,
+     "spoiler": 3,
+     "transmission": 3,
+     "vacuum_brake_booster": 3,
+     "piston": 3,
+     "oil_pan": 3,
+     "engine_valve": 3,
+     "lower_control_arm": 3,
+     "tail_light": 2,
+     "thermostat": 2,
+     "crankshaft": 2,
+     "brake_caliper": 2,
+     "side_mirror": 2,
+     "oil_filter": 2,
+     "alternator": 2,
+     "distributor": 2,
+     "radiator_hose": 2,
+     "radiator_fan": 2,
+     "brake_rotor": 2,
+     "camshaft": 2,
+     "leaf_spring": 2,
+     "fuse_box": 2,
+     "muffler": 2,
+     "valve_lifter": 1,
+     "idler_arm": 1,
+     "clutch_plate": 1,
+     "coil_spring": 1
+    },
+    "sources": {
+     "rf_used_auto_parts_50": 174
+    },
+    "groups": 174
+   }
+  },
+  "rf_engine_internals_383": {
+   "train": {
+    "images": 1032,
+    "images_without_annotations": 24,
+    "annotations": 1218,
+    "annotations_with_masks": 0,
+    "classes": 5,
+    "per_class": {
+     "camshaft": 315,
+     "connecting_rod": 279,
+     "piston": 252,
+     "crankshaft": 237,
+     "cylinder_head": 135
+    },
+    "sources": {
+     "rf_engine_internals_383": 1032
+    },
+    "groups": 128
+   },
+   "test": {
+    "images": 39,
+    "images_without_annotations": 2,
+    "annotations": 49,
+    "annotations_with_masks": 0,
+    "classes": 5,
+    "per_class": {
+     "piston": 13,
+     "crankshaft": 12,
+     "connecting_rod": 10,
+     "camshaft": 9,
+     "cylinder_head": 5
+    },
+    "sources": {
+     "rf_engine_internals_383": 39
+    },
+    "groups": 37
+   }
+  },
+  "rf_engine_internals_129": {
+   "train": {
+    "images": 270,
+    "images_without_annotations": 0,
+    "annotations": 279,
+    "annotations_with_masks": 0,
+    "classes": 4,
+    "per_class": {
+     "camshaft": 99,
+     "piston": 75,
+     "connecting_rod": 54,
+     "gear": 51
+    },
+    "sources": {
+     "rf_engine_internals_129": 270
+    },
+    "groups": 89
+   },
+   "val": {
+    "images": 26,
+    "images_without_annotations": 0,
+    "annotations": 26,
+    "annotations_with_masks": 0,
+    "classes": 4,
+    "per_class": {
+     "connecting_rod": 8,
+     "camshaft": 8,
+     "piston": 7,
+     "gear": 3
+    },
+    "sources": {
+     "rf_engine_internals_129": 26
+    },
+    "groups": 26
+   },
+   "test": {
+    "images": 13,
+    "images_without_annotations": 0,
+    "annotations": 13,
+    "annotations_with_masks": 0,
+    "classes": 4,
+    "per_class": {
+     "piston": 4,
+     "camshaft": 4,
+     "connecting_rod": 3,
+     "gear": 2
+    },
+    "sources": {
+     "rf_engine_internals_129": 13
+    },
+    "groups": 13
+   }
+  }
+ },
+ "skipped": []
+}

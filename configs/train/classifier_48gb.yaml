@@ -1,0 +1,11 @@
+# Isolated-part classifier on one RTX 6000 Ada (GPU 3): ConvNeXt-Base at 288 px, longer schedule.
+model: convnext_base
+epochs: 40
+batch_size: 128
+lr: 2.0e-4
+weight_decay: 0.05
+label_smoothing: 0.1
+resolution: 288
+warmup_epochs: 2
+num_workers: 12
+seed: 2026

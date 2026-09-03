@@ -91,6 +91,14 @@ def load_checkpoint(path: str | Path):
     return RFDETR.from_checkpoint(str(path))
 
 
+def resolve_run_checkpoint(run_dir: Path) -> Path:
+    """Best checkpoint of a run directory, whichever track produced it (RF-DETR or classifier)."""
+    run_dir = Path(run_dir)
+    if (run_dir / "classifier_best.pth").exists():
+        return run_dir / "classifier_best.pth"
+    return best_checkpoint(run_dir / "rfdetr")
+
+
 def best_checkpoint(rfdetr_out: Path) -> Path:
     for name in ("checkpoint_best_total.pth", "checkpoint_best_ema.pth", "checkpoint_best_regular.pth"):
         p = rfdetr_out / name
