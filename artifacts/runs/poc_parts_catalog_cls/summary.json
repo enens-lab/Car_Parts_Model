@@ -1,0 +1,202 @@
+{
+ "kind": "classifier",
+ "run": "poc_parts_catalog_cls",
+ "recipe": "parts_catalog_cls",
+ "model": "convnext_tiny",
+ "resolution": 224,
+ "train_config": {
+  "model": "convnext_tiny",
+  "epochs": 15,
+  "batch_size": 64,
+  "lr": 0.0003,
+  "weight_decay": 0.05,
+  "label_smoothing": 0.1,
+  "resolution": 224,
+  "warmup_epochs": 1,
+  "num_workers": 0,
+  "seed": 2026,
+  "name": "classifier_8gb"
+ },
+ "class_names": [
+  "air_compressor",
+  "alternator",
+  "battery",
+  "brake_caliper",
+  "brake_pad",
+  "brake_rotor",
+  "camshaft",
+  "carburetor",
+  "clutch_plate",
+  "coil_spring",
+  "connecting_rod",
+  "crankshaft",
+  "cylinder_head",
+  "distributor",
+  "engine_block",
+  "engine_valve",
+  "fuel_injector",
+  "fuse_box",
+  "gas_cap",
+  "gear",
+  "headlight",
+  "idler_arm",
+  "ignition_coil",
+  "instrument_cluster",
+  "leaf_spring",
+  "lower_control_arm",
+  "muffler",
+  "oil_filter",
+  "oil_pan",
+  "oil_pressure_sensor",
+  "overflow_tank",
+  "oxygen_sensor",
+  "piston",
+  "pressure_plate",
+  "radiator",
+  "radiator_fan",
+  "radiator_hose",
+  "radio",
+  "rim",
+  "shift_knob",
+  "side_mirror",
+  "spark_plug",
+  "spoiler",
+  "starter",
+  "tail_light",
+  "thermostat",
+  "torque_converter",
+  "transmission",
+  "vacuum_brake_booster",
+  "valve_lifter",
+  "water_pump",
+  "window_regulator"
+ ],
+ "num_classes": 52,
+ "checkpoint": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\artifacts\\runs\\poc_parts_catalog_cls\\classifier_best.pth",
+ "best_val_top1": 0.9631840586662292,
+ "history": [
+  {
+   "epoch": 1,
+   "loss": 2.341239023208618,
+   "val_top1": 0.9034826159477234,
+   "val_top5": 0.9870646595954895,
+   "seconds": 124.3
+  },
+  {
+   "epoch": 2,
+   "loss": 0.9572216382026673,
+   "val_top1": 0.9363183975219727,
+   "val_top5": 0.9900497794151306,
+   "seconds": 68.8
+  },
+  {
+   "epoch": 3,
+   "loss": 0.8268733453750611,
+   "val_top1": 0.9422885775566101,
+   "val_top5": 0.9940298795700073,
+   "seconds": 69.1
+  },
+  {
+   "epoch": 4,
+   "loss": 0.7791653671264649,
+   "val_top1": 0.9333333373069763,
+   "val_top5": 0.9910447597503662,
+   "seconds": 69.9
+  },
+  {
+   "epoch": 5,
+   "loss": 0.7592863841056824,
+   "val_top1": 0.9452736377716064,
+   "val_top5": 0.9940298795700073,
+   "seconds": 68.0
+  },
+  {
+   "epoch": 6,
+   "loss": 0.7482157316207886,
+   "val_top1": 0.9522387981414795,
+   "val_top5": 0.9950248599052429,
+   "seconds": 68.3
+  },
+  {
+   "epoch": 7,
+   "loss": 0.7348795642852783,
+   "val_top1": 0.9631840586662292,
+   "val_top5": 0.9970149397850037,
+   "seconds": 71.6
+  },
+  {
+   "epoch": 8,
+   "loss": 0.7244989008903503,
+   "val_top1": 0.9472636580467224,
+   "val_top5": 0.9950248599052429,
+   "seconds": 69.5
+  },
+  {
+   "epoch": 9,
+   "loss": 0.7208565511703491,
+   "val_top1": 0.9582089781761169,
+   "val_top5": 0.9960198998451233,
+   "seconds": 69.7
+  },
+  {
+   "epoch": 10,
+   "loss": 0.7213944306373596,
+   "val_top1": 0.9592039585113525,
+   "val_top5": 0.9950248599052429,
+   "seconds": 62.1
+  },
+  {
+   "epoch": 11,
+   "loss": 0.7171073241233825,
+   "val_top1": 0.9572139382362366,
+   "val_top5": 0.998009979724884,
+   "seconds": 62.9
+  },
+  {
+   "epoch": 12,
+   "loss": 0.7149221534729004,
+   "val_top1": 0.9621890783309937,
+   "val_top5": 0.998009979724884,
+   "seconds": 64.5
+  },
+  {
+   "epoch": 13,
+   "loss": 0.7136507034301758,
+   "val_top1": 0.9601989984512329,
+   "val_top5": 0.9970149397850037,
+   "seconds": 73.2
+  },
+  {
+   "epoch": 14,
+   "loss": 0.7132315616607666,
+   "val_top1": 0.9592039585113525,
+   "val_top5": 0.9970149397850037,
+   "seconds": 71.3
+  },
+  {
+   "epoch": 15,
+   "loss": 0.7137367901802063,
+   "val_top1": 0.9592039585113525,
+   "val_top5": 0.9970149397850037,
+   "seconds": 70.3
+  }
+ ],
+ "train_seconds": 1093.2,
+ "started": "2026-09-03T13:17:07",
+ "finished": "2026-09-03T13:35:20",
+ "test_metrics": {
+  "top1": 0.9582919478416443,
+  "top5": 0.9970208406448364,
+  "macro_acc": 0.9509694513220054,
+  "n": 1007
+ },
+ "dataset_card": {
+  "path": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\data\\processed\\parts_catalog_cls\\dataset_card.json",
+  "created": "2026-09-03T12:48:29",
+  "images": {
+   "train": 8058,
+   "val": 1008,
+   "test": 1008
+  }
+ }
+}

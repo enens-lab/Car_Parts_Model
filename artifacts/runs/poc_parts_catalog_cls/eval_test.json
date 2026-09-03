@@ -1,0 +1,270 @@
+{
+ "checkpoint": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\artifacts\\runs\\poc_parts_catalog_cls\\classifier_best.pth",
+ "split": "test",
+ "n": 1007,
+ "top1": 0.9582919478416443,
+ "top5": 0.9970208406448364,
+ "macro_acc": 0.9509694513220054,
+ "per_class": {
+  "air_compressor": {
+   "n": 16,
+   "acc": 1.0
+  },
+  "alternator": {
+   "n": 15,
+   "acc": 0.9333333373069763
+  },
+  "battery": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "brake_caliper": {
+   "n": 15,
+   "acc": 0.8666666746139526
+  },
+  "brake_pad": {
+   "n": 20,
+   "acc": 1.0
+  },
+  "brake_rotor": {
+   "n": 23,
+   "acc": 1.0
+  },
+  "camshaft": {
+   "n": 53,
+   "acc": 0.9622641801834106
+  },
+  "carburetor": {
+   "n": 27,
+   "acc": 1.0
+  },
+  "clutch_plate": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "coil_spring": {
+   "n": 15,
+   "acc": 0.9333333373069763
+  },
+  "connecting_rod": {
+   "n": 24,
+   "acc": 1.0
+  },
+  "crankshaft": {
+   "n": 49,
+   "acc": 0.9387755393981934
+  },
+  "cylinder_head": {
+   "n": 26,
+   "acc": 1.0
+  },
+  "distributor": {
+   "n": 9,
+   "acc": 0.4444444477558136
+  },
+  "engine_block": {
+   "n": 14,
+   "acc": 0.8571428656578064
+  },
+  "engine_valve": {
+   "n": 13,
+   "acc": 1.0
+  },
+  "fuel_injector": {
+   "n": 15,
+   "acc": 0.9333333373069763
+  },
+  "fuse_box": {
+   "n": 23,
+   "acc": 0.95652174949646
+  },
+  "gas_cap": {
+   "n": 18,
+   "acc": 0.8888888955116272
+  },
+  "gear": {
+   "n": 3,
+   "acc": 1.0
+  },
+  "headlight": {
+   "n": 18,
+   "acc": 0.9444444179534912
+  },
+  "idler_arm": {
+   "n": 21,
+   "acc": 1.0
+  },
+  "ignition_coil": {
+   "n": 21,
+   "acc": 0.9523809552192688
+  },
+  "instrument_cluster": {
+   "n": 16,
+   "acc": 0.9375
+  },
+  "leaf_spring": {
+   "n": 14,
+   "acc": 0.7142857313156128
+  },
+  "lower_control_arm": {
+   "n": 16,
+   "acc": 0.9375
+  },
+  "muffler": {
+   "n": 13,
+   "acc": 0.9230769276618958
+  },
+  "oil_filter": {
+   "n": 16,
+   "acc": 1.0
+  },
+  "oil_pan": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "oil_pressure_sensor": {
+   "n": 18,
+   "acc": 1.0
+  },
+  "overflow_tank": {
+   "n": 19,
+   "acc": 0.8947368264198303
+  },
+  "oxygen_sensor": {
+   "n": 16,
+   "acc": 1.0
+  },
+  "piston": {
+   "n": 48,
+   "acc": 1.0
+  },
+  "pressure_plate": {
+   "n": 15,
+   "acc": 1.0
+  },
+  "radiator": {
+   "n": 17,
+   "acc": 1.0
+  },
+  "radiator_fan": {
+   "n": 14,
+   "acc": 1.0
+  },
+  "radiator_hose": {
+   "n": 20,
+   "acc": 1.0
+  },
+  "radio": {
+   "n": 14,
+   "acc": 1.0
+  },
+  "rim": {
+   "n": 25,
+   "acc": 1.0
+  },
+  "shift_knob": {
+   "n": 19,
+   "acc": 1.0
+  },
+  "side_mirror": {
+   "n": 19,
+   "acc": 0.8947368264198303
+  },
+  "spark_plug": {
+   "n": 18,
+   "acc": 1.0
+  },
+  "spoiler": {
+   "n": 20,
+   "acc": 1.0
+  },
+  "starter": {
+   "n": 20,
+   "acc": 0.949999988079071
+  },
+  "tail_light": {
+   "n": 13,
+   "acc": 1.0
+  },
+  "thermostat": {
+   "n": 11,
+   "acc": 1.0
+  },
+  "torque_converter": {
+   "n": 20,
+   "acc": 0.8999999761581421
+  },
+  "transmission": {
+   "n": 25,
+   "acc": 0.9200000166893005
+  },
+  "vacuum_brake_booster": {
+   "n": 22,
+   "acc": 0.9545454382896423
+  },
+  "valve_lifter": {
+   "n": 21,
+   "acc": 1.0
+  },
+  "water_pump": {
+   "n": 16,
+   "acc": 0.8125
+  },
+  "window_regulator": {
+   "n": 19,
+   "acc": 1.0
+  }
+ },
+ "top_confusions": [
+  {
+   "true": "crankshaft",
+   "pred": "camshaft",
+   "count": 3
+  },
+  {
+   "true": "leaf_spring",
+   "pred": "lower_control_arm",
+   "count": 3
+  },
+  {
+   "true": "distributor",
+   "pred": "air_compressor",
+   "count": 2
+  },
+  {
+   "true": "engine_block",
+   "pred": "cylinder_head",
+   "count": 2
+  },
+  {
+   "true": "alternator",
+   "pred": "air_compressor",
+   "count": 1
+  },
+  {
+   "true": "brake_caliper",
+   "pred": "cylinder_head",
+   "count": 1
+  },
+  {
+   "true": "brake_caliper",
+   "pred": "ignition_coil",
+   "count": 1
+  },
+  {
+   "true": "camshaft",
+   "pred": "crankshaft",
+   "count": 1
+  },
+  {
+   "true": "camshaft",
+   "pred": "oxygen_sensor",
+   "count": 1
+  },
+  {
+   "true": "coil_spring",
+   "pred": "crankshaft",
+   "count": 1
+  }
+ ]
+}

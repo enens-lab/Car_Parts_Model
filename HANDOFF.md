@@ -45,7 +45,7 @@ Mechanics:
 | Run | Model | Recipe | Epochs | best val top-1 | **test top-1 / top-5 / macro** | Wall-clock | Notes |
 |---|---|---|---|---|---|---|---|
 | `poc_powertrain_cls` | convnext_tiny @224 | powertrain_cls (26) | 15 | 0.982 | **0.969 / 0.998 / 0.972** (n=543) | 19 min | laptop; weakest: distributor 0.78 (n=9), crankshaft 0.86 (→camshaft ×6) |
-| `poc_parts_catalog_cls` | convnext_tiny @224 | parts_catalog_cls (52) | 15 | _running_ | _see artifacts/runs/poc_parts_catalog_cls/summary.json_ | ~40 min | laptop |
+| `poc_parts_catalog_cls` | convnext_tiny @224 | parts_catalog_cls (52) | 15 | 0.963 | **0.958 / 0.997 / 0.951** (n=1,007) | 18 min | laptop; weakest: distributor 0.44 (n=9), leaf_spring 0.71 (n=14), water_pump 0.81 (n=16) |
 
 **Scoreboard — exterior segmentation** (frozen grouped split, seed 2026; test = 383 exterior photos)
 
