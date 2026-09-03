@@ -1,0 +1,85 @@
+{
+ "source": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\data\\processed\\smoke_exterior_seg\\test\\carparts_seg__new_61_png_jpg.rf.35a7cb8abc546462666ae7b0287764cb.jpg",
+ "height": 640,
+ "width": 640,
+ "objects": [
+  {
+   "label": "front_light",
+   "confidence": 0.3441,
+   "bbox_xyxy": [
+    125.9,
+    216.9,
+    202.4,
+    324.2
+   ],
+   "model": "smoke",
+   "area_px": 6820,
+   "polygon": [
+    [
+     144,
+     217
+    ],
+    [
+     137,
+     225
+    ],
+    [
+     136,
+     236
+    ],
+    [
+     133,
+     242
+    ],
+    [
+     128,
+     287
+    ],
+    [
+     128,
+     310
+    ],
+    [
+     131,
+     314
+    ],
+    [
+     181,
+     323
+    ],
+    [
+     194,
+     323
+    ],
+    [
+     199,
+     318
+    ],
+    [
+     202,
+     286
+    ],
+    [
+     202,
+     265
+    ],
+    [
+     197,
+     248
+    ],
+    [
+     188,
+     229
+    ],
+    [
+     181,
+     221
+    ],
+    [
+     156,
+     216
+    ]
+   ]
+  }
+ ]
+}

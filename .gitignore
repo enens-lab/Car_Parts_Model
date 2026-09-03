@@ -1,0 +1,42 @@
+# secrets
+.env
+*.key
+kaggle.json
+
+# python / uv
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+*_install.log
+
+# data (rebuildable via scripts/prepare_data.py) — keep the reports
+data/raw/
+data/processed/
+!data/README.md
+
+# model weights & training outputs — keep the summaries (summary.json, eval_*.json)
+artifacts/runs/**/*.pth
+artifacts/runs/**/*.pt
+artifacts/runs/**/*.ckpt
+artifacts/runs/**/*.onnx
+artifacts/runs/**/*.trt
+artifacts/runs/**/tensorboard/
+artifacts/runs/**/lightning_logs/
+artifacts/runs/**/events.out.tfevents*
+artifacts/runs/**/hparams.yaml
+artifacts/runs/**/*.jsonl
+artifacts/exports/
+artifacts/predictions/
+artifacts/logs/
+artifacts/*.log
+artifacts/pretrained/
+*.pth
+*.ckpt
+*.onnx
+
+# OS
+Thumbs.db
+.DS_Store

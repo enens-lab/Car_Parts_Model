@@ -1,0 +1,7 @@
+# Relative paths resolve against the project root. Point `raw`/`processed` at a big drive if needed.
+raw: data/raw
+processed: data/processed
+artifacts: artifacts
+runs: artifacts/runs
+reports: artifacts/data_reports
+exports: artifacts/exports

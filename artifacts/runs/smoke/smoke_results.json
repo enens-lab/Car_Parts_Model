@@ -1,0 +1,18 @@
+{
+ "prepare": {
+  "ok": true,
+  "seconds": 10.5
+ },
+ "train+eval": {
+  "ok": true,
+  "seconds": 30.5
+ },
+ "predict": {
+  "ok": true,
+  "seconds": 0.5
+ },
+ "export": {
+  "ok": true,
+  "seconds": 4.6
+ }
+}

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>carparts demo</title>
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --line:#2a2f3a; --fg:#e6e8ee; --muted:#9aa3b2; --accent:#4f8cff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 system-ui, Segoe UI, Roboto, sans-serif; }
+  header { padding:14px 20px; border-bottom:1px solid var(--line); display:flex; gap:16px; align-items:baseline; }
+  header h1 { font-size:16px; margin:0; letter-spacing:.3px; }
+  header .muted { color:var(--muted); }
+  main { display:grid; grid-template-columns: 1.3fr 1fr; gap:16px; padding:16px 20px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  #drop { border:2px dashed var(--line); border-radius:10px; min-height:260px; display:flex; align-items:center;
+          justify-content:center; text-align:center; color:var(--muted); cursor:pointer; position:relative; overflow:hidden; }
+  #drop.over { border-color:var(--accent); color:var(--fg); }
+  #drop img { max-width:100%; max-height:70vh; display:block; }
+  .row { display:flex; gap:12px; align-items:center; margin:12px 0; flex-wrap:wrap; }
+  input[type=range] { width:200px; }
+  button { background:var(--accent); color:white; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-weight:600; }
+  button:disabled { opacity:.5; cursor:default; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:600; }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  pre { background:#0b0d11; border:1px solid var(--line); border-radius:8px; padding:10px; max-height:40vh; overflow:auto; font-size:12px; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; background:#232838; color:var(--muted); margin-right:6px; font-size:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>carparts · localhost demo</h1>
+  <span class="muted" id="health">loading models…</span>
+</header>
+<main>
+  <section class="panel">
+    <div id="drop"><span>Drop a car photo here or click to choose<br><small>exterior body parts / engine bay</small></span>
+      <input id="file" type="file" accept="image/*" hidden></div>
+    <div class="row">
+      <label>threshold <input id="thr" type="range" min="0.05" max="0.95" step="0.05" value="0.5"> <b id="thrv">0.50</b></label>
+      <button id="go" disabled>Detect</button>
+      <span class="muted" id="status"></span>
+    </div>
+  </section>
+  <section class="panel">
+    <div id="pills"></div>
+    <table><thead><tr><th>label</th><th>model</th><th class="num">conf</th><th class="num">box (x0,y0,x1,y1)</th></tr></thead>
+      <tbody id="rows"></tbody></table>
+    <details style="margin-top:12px"><summary class="muted">raw JSON</summary><pre id="json"></pre></details>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+let currentFile = null;
+fetch('/health').then(r => r.json()).then(h => {
+  const ms = Object.entries(h.models).map(([k,v]) => `${k} (${v.classes} classes${v.segmentation?', masks':''})`).join(' · ');
+  $('#health').textContent = `${h.device} · ${ms}`;
+}).catch(() => $('#health').textContent = 'server unreachable');
+$('#thr').oninput = e => $('#thrv').textContent = Number(e.target.value).toFixed(2);
+const drop = $('#drop'), fileInput = $('#file');
+drop.onclick = () => fileInput.click();
+drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
+drop.ondragleave = () => drop.classList.remove('over');
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); };
+fileInput.onchange = () => fileInput.files[0] && setFile(fileInput.files[0]);
+function setFile(f) { currentFile = f; $('#go').disabled = false; show(URL.createObjectURL(f)); $('#status').textContent = f.name; }
+function show(url) { drop.innerHTML = ''; const img = document.createElement('img'); img.src = url; drop.appendChild(img); }
+$('#go').onclick = async () => {
+  if (!currentFile) return;
+  $('#go').disabled = true; $('#status').textContent = 'running…';
+  const fd = new FormData(); fd.append('file', currentFile); fd.append('threshold', $('#thr').value);
+  const t = performance.now();
+  try {
+    const [jr, ir] = await Promise.all([fetch('/predict', {method:'POST', body: fd}),
+                                        fetch('/predict/image', {method:'POST', body: fd})]);
+    if (!jr.ok) throw new Error(await jr.text());
+    const j = await jr.json(); const blob = await ir.blob();
+    show(URL.createObjectURL(blob));
+    $('#rows').innerHTML = j.objects.map(o => `<tr><td>${o.label}</td><td class="muted">${o.model||''}</td>
+      <td class="num">${(o.confidence*100).toFixed(1)}%</td><td class="num">${o.bbox_xyxy.map(v=>Math.round(v)).join(', ')}</td></tr>`).join('') ||
+      '<tr><td colspan=4 class="muted">nothing above threshold</td></tr>';
+    const counts = {}; j.objects.forEach(o => counts[o.label] = (counts[o.label]||0)+1);
+    $('#pills').innerHTML = Object.entries(counts).map(([k,v]) => `<span class="pill">${k} ×${v}</span>`).join('');
+    $('#json').textContent = JSON.stringify(j, null, 1);
+    $('#status').textContent = `${j.objects.length} objects · ${Math.round(performance.now()-t)} ms round-trip · model ${JSON.stringify(j.timings_ms)}`;
+  } catch (e) { $('#status').textContent = 'error: ' + e.message; }
+  $('#go').disabled = false;
+};
+</script>
+</body>
+</html>

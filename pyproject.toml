@@ -1,0 +1,61 @@
+[project]
+name = "carparts"
+version = "0.1.0"
+description = "Commercial-grade car parts detection & segmentation (exterior body parts + engine bay components) on RF-DETR (Apache-2.0)."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "Proprietary" }
+dependencies = [
+    # --- model / training stack (all Apache-2.0 or more permissive) ---
+    "rfdetr[train,onnx,loggers]>=1.9.4",   # Apache-2.0 code + Apache-2.0 N/S/M/L + all Seg weights (NOT the [plus] XL/2XL PML-1.0 weights)
+    "torch>=2.6",                          # BSD-3 — installed from the PyTorch cu126 index (see [tool.uv.sources])
+    "torchvision>=0.21",
+    "supervision>=0.29",                   # MIT
+    "pycocotools>=2.0.8",                  # BSD
+    # --- data plumbing ---
+    "numpy>=2.0",
+    "pillow>=10.4",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "python-dotenv>=1.0",
+    "opencv-python-headless>=4.10",        # Apache-2.0 — video / drawing in predict.py
+    "onnxruntime>=1.20",                   # MIT — validates exported ONNX graphs
+]
+
+[project.optional-dependencies]
+serve = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "python-multipart>=0.0.9"]   # localhost demo API (app/server.py)
+kaggle = ["kagglehub>=0.3"]                # Kaggle engine-bay dataset download (needs KAGGLE_USERNAME/KAGGLE_KEY)
+roboflow = ["roboflow>=1.1"]               # Roboflow Universe extras (needs ROBOFLOW_API_KEY)
+# AGPL-3.0 baseline ONLY. Never ship anything trained/exported with this extra without an
+# Ultralytics Enterprise License. Kept in a separate extra so the default environment stays clean.
+baseline-agpl = ["ultralytics>=8.3"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/carparts"]
+
+# ---------------------------------------------------------------------------
+# PyTorch with CUDA 12.6 wheels (works with the 12.5 driver on this box via
+# CUDA minor-version compatibility). On a CPU-only machine comment the two
+# `tool.uv.sources` entries out and uv will fall back to PyPI CPU wheels.
+# ---------------------------------------------------------------------------
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu126", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }]
+torchvision = [{ index = "pytorch-cu126", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"

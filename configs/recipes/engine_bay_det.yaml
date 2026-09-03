@@ -1,0 +1,26 @@
+# Engine-bay component DETECTION — canonical 26-class taxonomy (Kaggle ids 0..25).
+# Sources that need credentials are skipped with a message when the env var is absent, so this recipe
+# always builds from whatever is available; the dataset card records exactly what went in.
+name: engine_bay_det
+task: detection
+description: 26 engine-bay components (battery, fuse box, reservoirs, dipsticks, filters, ...) with boxes.
+sources:
+  - name: kaggle_engine_bay                 # MIT, 1,201 photos (kagglehub; anonymous works for public sets)
+  - name: rf_engine_bay_parts_stephens      # MIT, 2,378 photos, needs ROBOFLOW_API_KEY
+    class_map: engine_bay                   # "0".."25" + spelled-out names -> canonical taxonomy
+  # - name: rf_car_engine_bay_razeen        # CC BY 4.0 re-upload of the Kaggle set; enable if Kaggle is blocked
+  #   class_map: engine_bay
+  # PARTIAL-label sets are deliberately NOT included (they would label most components as background):
+  # - name: rf_engine_parts_detector  (6 classes)
+  # - name: rf_car_under_the_hood     (3 classes)
+split:
+  strategy: grouped
+  fractions: {train: 0.8, val: 0.1, test: 0.1}
+  seed: 2026
+  dedupe_hash: true                          # folds Kaggle <-> Roboflow re-uploads of the same photo together
+classes: [inverter_coolant_reservoir, battery, radiator_cap, windshield_wiper_fluid, fuse_box,
+          power_steering_reservoir, brake_fluid, engine_oil_fill_cap, engine_oil_dipstick, air_filter_cover,
+          abs_unit, alternator, engine_coolant_reservoir, radiator, air_filter, engine_cover, cold_air_intake,
+          clutch_fluid_reservoir, transmission_oil_dipstick, intercooler_coolant_reservoir, oil_filter_housing,
+          atf_oil_reservoir, cabin_air_filter_housing, secondary_coolant_reservoir, electric_motor, oil_filter]
+min_instances_per_class: 0

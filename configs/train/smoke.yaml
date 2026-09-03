@@ -1,0 +1,20 @@
+# Pipeline smoke test: tiny model, one epoch, low resolution. Proves data -> train -> eval -> export
+# end to end in a few minutes. Numbers are meaningless.
+model: rfdetr-seg-nano
+epochs: 1
+batch_size: 2
+grad_accum_steps: 2
+lr: 1.0e-4
+lr_encoder: 1.5e-4
+weight_decay: 1.0e-4
+resolution: 312
+gradient_checkpointing: false
+use_ema: false
+early_stopping: false
+checkpoint_interval: 1
+warmup_epochs: 0
+lr_scheduler: step
+num_workers: 0
+seed: 0
+tensorboard: false
+log_per_class_metrics: false

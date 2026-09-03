@@ -1,0 +1,22 @@
+# Proof-of-concept on the 8 GB laptop GPU: small segmentation model, short schedule (~30-40 min).
+# Good enough to see real masks in the demo app; NOT the production recipe (see rfdetr_8gb / rfdetr_4x48gb).
+# num_workers: 0 on purpose — with 16 GB RAM every spawned Windows DataLoader worker (~1.5 GB, re-imports torch)
+# risks a MemoryError; seg-nano @312 is light enough to feed from the main process.
+model: rfdetr-seg-nano
+epochs: 12
+batch_size: 4
+grad_accum_steps: 4
+lr: 1.0e-4
+lr_encoder: 1.5e-4
+weight_decay: 1.0e-4
+resolution: null            # seg-nano default 312
+gradient_checkpointing: false
+use_ema: true
+early_stopping: false
+checkpoint_interval: 4
+warmup_epochs: 0.5
+lr_scheduler: cosine
+num_workers: 0
+seed: 2026
+tensorboard: true
+log_per_class_metrics: true

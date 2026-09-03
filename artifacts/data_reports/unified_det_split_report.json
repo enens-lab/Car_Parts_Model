@@ -1,0 +1,264 @@
+{
+ "strategy": "grouped",
+ "seed": 2026,
+ "counts": {
+  "train": 5877,
+  "val": 735,
+  "test": 735
+ },
+ "groups": {
+  "train": 1307,
+  "val": 162,
+  "test": 162
+ },
+ "cross_split_groups": 0,
+ "leaked_eval_images": 0,
+ "per_class": {
+  "back_bumper": {
+   "train": 696,
+   "val": 75,
+   "test": 99
+  },
+  "back_door": {
+   "train": 971,
+   "val": 126,
+   "test": 155
+  },
+  "back_glass": {
+   "train": 851,
+   "val": 84,
+   "test": 123
+  },
+  "back_left_door": {
+   "train": 207,
+   "val": 27,
+   "test": 21
+  },
+  "back_left_light": {
+   "train": 225,
+   "val": 31,
+   "test": 35
+  },
+  "back_light": {
+   "train": 1528,
+   "val": 171,
+   "test": 203
+  },
+  "back_right_door": {
+   "train": 165,
+   "val": 22,
+   "test": 37
+  },
+  "back_right_light": {
+   "train": 186,
+   "val": 21,
+   "test": 34
+  },
+  "front_bumper": {
+   "train": 1603,
+   "val": 189,
+   "test": 186
+  },
+  "front_door": {
+   "train": 1098,
+   "val": 131,
+   "test": 180
+  },
+  "front_glass": {
+   "train": 1660,
+   "val": 208,
+   "test": 194
+  },
+  "front_left_door": {
+   "train": 226,
+   "val": 27,
+   "test": 26
+  },
+  "front_left_light": {
+   "train": 410,
+   "val": 54,
+   "test": 40
+  },
+  "front_light": {
+   "train": 2519,
+   "val": 286,
+   "test": 283
+  },
+  "front_right_door": {
+   "train": 183,
+   "val": 28,
+   "test": 37
+  },
+  "front_right_light": {
+   "train": 387,
+   "val": 40,
+   "test": 47
+  },
+  "hood": {
+   "train": 1681,
+   "val": 211,
+   "test": 188
+  },
+  "left_mirror": {
+   "train": 414,
+   "val": 47,
+   "test": 36
+  },
+  "object": {
+   "train": 10,
+   "val": 0,
+   "test": 2
+  },
+  "right_mirror": {
+   "train": 398,
+   "val": 50,
+   "test": 51
+  },
+  "tailgate": {
+   "train": 75,
+   "val": 12,
+   "test": 14
+  },
+  "trunk": {
+   "train": 135,
+   "val": 14,
+   "test": 24
+  },
+  "wheel": {
+   "train": 695,
+   "val": 84,
+   "test": 98
+  },
+  "inverter_coolant_reservoir": {
+   "train": 60,
+   "val": 3,
+   "test": 9
+  },
+  "battery": {
+   "train": 1660,
+   "val": 211,
+   "test": 197
+  },
+  "radiator_cap": {
+   "train": 1127,
+   "val": 160,
+   "test": 124
+  },
+  "windshield_wiper_fluid": {
+   "train": 1885,
+   "val": 255,
+   "test": 249
+  },
+  "fuse_box": {
+   "train": 1215,
+   "val": 174,
+   "test": 174
+  },
+  "power_steering_reservoir": {
+   "train": 955,
+   "val": 135,
+   "test": 90
+  },
+  "brake_fluid": {
+   "train": 2342,
+   "val": 296,
+   "test": 280
+  },
+  "engine_oil_fill_cap": {
+   "train": 2368,
+   "val": 324,
+   "test": 299
+  },
+  "engine_oil_dipstick": {
+   "train": 1663,
+   "val": 217,
+   "test": 215
+  },
+  "air_filter_cover": {
+   "train": 1719,
+   "val": 209,
+   "test": 241
+  },
+  "abs_unit": {
+   "train": 524,
+   "val": 66,
+   "test": 72
+  },
+  "alternator": {
+   "train": 564,
+   "val": 79,
+   "test": 56
+  },
+  "engine_coolant_reservoir": {
+   "train": 2115,
+   "val": 277,
+   "test": 269
+  },
+  "radiator": {
+   "train": 1560,
+   "val": 213,
+   "test": 188
+  },
+  "air_filter": {
+   "train": 113,
+   "val": 9,
+   "test": 16
+  },
+  "engine_cover": {
+   "train": 2131,
+   "val": 284,
+   "test": 280
+  },
+  "cold_air_intake": {
+   "train": 458,
+   "val": 59,
+   "test": 42
+  },
+  "clutch_fluid_reservoir": {
+   "train": 195,
+   "val": 41,
+   "test": 30
+  },
+  "transmission_oil_dipstick": {
+   "train": 128,
+   "val": 6,
+   "test": 30
+  },
+  "intercooler_coolant_reservoir": {
+   "train": 46,
+   "val": 3,
+   "test": 6
+  },
+  "oil_filter_housing": {
+   "train": 262,
+   "val": 15,
+   "test": 66
+  },
+  "atf_oil_reservoir": {
+   "train": 3,
+   "val": 0,
+   "test": 0
+  },
+  "cabin_air_filter_housing": {
+   "train": 63,
+   "val": 3,
+   "test": 15
+  },
+  "secondary_coolant_reservoir": {
+   "train": 21,
+   "val": 3,
+   "test": 0
+  },
+  "electric_motor": {
+   "train": 65,
+   "val": 3,
+   "test": 12
+  },
+  "oil_filter": {
+   "train": 15,
+   "val": 0,
+   "test": 0
+  }
+ },
+ "duplicate_annotations_removed": 3
+}

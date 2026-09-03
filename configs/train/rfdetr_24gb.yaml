@@ -1,0 +1,21 @@
+# Hardware budget: 24 GB GPU (RTX 3090/4090, A10) — larger model, native batches.
+model: rfdetr-seg-large
+epochs: 80
+batch_size: 8
+grad_accum_steps: 2
+lr: 1.0e-4
+lr_encoder: 1.5e-4
+weight_decay: 1.0e-4
+resolution: null
+gradient_checkpointing: false
+use_ema: true
+early_stopping: true
+early_stopping_patience: 15
+early_stopping_min_delta: 0.001
+checkpoint_interval: 5
+warmup_epochs: 1
+lr_scheduler: cosine
+num_workers: 8
+seed: 2026
+tensorboard: true
+log_per_class_metrics: true

@@ -1,0 +1,18 @@
+# ONE detector for both domains (boxes only): 23 exterior classes + 26 engine-bay classes = 49 classes.
+# Masks from carparts-seg are reduced to boxes. Handy when a single deployable model matters more than
+# pixel-accurate exterior masks; otherwise deploy exterior_seg + engine_bay_det side by side.
+name: unified_det
+task: detection
+description: Exterior body parts + engine-bay components in a single 49-class box detector.
+sources:
+  - name: carparts_seg
+  - name: kaggle_engine_bay
+  - name: rf_engine_bay_parts_stephens
+    class_map: engine_bay
+split:
+  strategy: grouped
+  fractions: {train: 0.8, val: 0.1, test: 0.1}
+  seed: 2026
+  dedupe_hash: true
+classes: null
+min_instances_per_class: 0

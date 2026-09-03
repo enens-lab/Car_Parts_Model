@@ -1,0 +1,217 @@
+{
+ "checkpoint": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\artifacts\\runs\\smoke\\rfdetr\\checkpoint_best_total.pth",
+ "dataset_dir": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\data\\processed\\smoke_exterior_seg",
+ "split": "test",
+ "n_images": 18,
+ "threshold": 0.05,
+ "summary": {
+  "bbox": {
+   "AP": 0.02348679467118084,
+   "AP50": 0.03422692384810865,
+   "AP75": 0.02501390975577671,
+   "AP_small": 0.0,
+   "AP_medium": 0.02401928494429987,
+   "AP_large": 0.035337482651804766,
+   "AR100": 0.12117303061575507
+  },
+  "segm": {
+   "AP": 0.016597528764159437,
+   "AP50": 0.025490756113688156,
+   "AP75": 0.02036459214427405,
+   "AP_small": 0.0,
+   "AP_medium": 0.018410807862660302,
+   "AP_large": 0.02584203717010546,
+   "AR100": 0.09957000343997247
+  }
+ },
+ "per_class": {
+  "bbox": {
+   "back_bumper": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_glass": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_left_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_left_light": {
+    "AP": null,
+    "AP50": null
+   },
+   "back_light": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_right_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_right_light": {
+    "AP": null,
+    "AP50": null
+   },
+   "front_bumper": {
+    "AP": 0.18888888888888888,
+    "AP50": 0.2805280528052805
+   },
+   "front_door": {
+    "AP": 0.00034438226431338786,
+    "AP50": 0.0017219113215669393
+   },
+   "front_glass": {
+    "AP": 0.017668091629593922,
+    "AP50": 0.02308518960435548
+   },
+   "front_left_door": {
+    "AP": null,
+    "AP50": null
+   },
+   "front_left_light": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "front_light": {
+    "AP": 0.012912915483920883,
+    "AP50": 0.01629976827469981
+   },
+   "front_right_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "front_right_light": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "hood": {
+    "AP": 0.1685371387341164,
+    "AP50": 0.18651541267487076
+   },
+   "left_mirror": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "object": {
+    "AP": null,
+    "AP50": null
+   },
+   "right_mirror": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "tailgate": {
+    "AP": null,
+    "AP50": null
+   },
+   "trunk": {
+    "AP": null,
+    "AP50": null
+   },
+   "wheel": {
+    "AP": 0.010924092409240926,
+    "AP50": 0.07370737073707373
+   }
+  },
+  "segm": {
+   "back_bumper": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_glass": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_left_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_left_light": {
+    "AP": null,
+    "AP50": null
+   },
+   "back_light": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_right_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "back_right_light": {
+    "AP": null,
+    "AP50": null
+   },
+   "front_bumper": {
+    "AP": 0.1253025302530253,
+    "AP50": 0.20572057205720573
+   },
+   "front_door": {
+    "AP": 0.00017219113215669393,
+    "AP50": 0.0017219113215669393
+   },
+   "front_glass": {
+    "AP": 0.01754995930558738,
+    "AP50": 0.02308518960435548
+   },
+   "front_left_door": {
+    "AP": null,
+    "AP50": null
+   },
+   "front_left_light": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "front_light": {
+    "AP": 0.013498963488941775,
+    "AP50": 0.01629976827469981
+   },
+   "front_right_door": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "front_right_light": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "hood": {
+    "AP": 0.12563434481099933,
+    "AP50": 0.18651541267487076
+   },
+   "left_mirror": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "object": {
+    "AP": null,
+    "AP50": null
+   },
+   "right_mirror": {
+    "AP": 0.0,
+    "AP50": 0.0
+   },
+   "tailgate": {
+    "AP": null,
+    "AP50": null
+   },
+   "trunk": {
+    "AP": null,
+    "AP50": null
+   },
+   "wheel": {
+    "AP": 0.0,
+    "AP50": 0.0
+   }
+  }
+ }
+}

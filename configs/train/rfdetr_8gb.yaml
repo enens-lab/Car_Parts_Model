@@ -1,0 +1,23 @@
+# Hardware budget: one 8 GB GPU (RTX 4070 Laptop) with 16 GB system RAM — effective batch 16 via accumulation.
+# Model defaults: seg-medium@432 (multiple of 24) / det-medium@576 (multiple of 32). Override with --model.
+# num_workers is kept at 2 because each DataLoader worker costs ~1 GB RAM on Windows (spawn).
+model: rfdetr-seg-medium
+epochs: 60
+batch_size: 2
+grad_accum_steps: 8
+lr: 1.0e-4
+lr_encoder: 1.5e-4
+weight_decay: 1.0e-4
+resolution: null            # null = model default; seg needs a multiple of 24 (nano: 12), det a multiple of 32
+gradient_checkpointing: true
+use_ema: true
+early_stopping: true
+early_stopping_patience: 12
+early_stopping_min_delta: 0.001
+checkpoint_interval: 5
+warmup_epochs: 1
+lr_scheduler: cosine
+num_workers: 2
+seed: 2026
+tensorboard: true
+log_per_class_metrics: true

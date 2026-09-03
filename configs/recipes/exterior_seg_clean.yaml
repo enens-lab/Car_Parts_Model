@@ -1,0 +1,26 @@
+# Exterior INSTANCE SEGMENTATION with a product-grade, side-agnostic taxonomy (14 classes):
+# left/right variants merged into their parent, the catch-all "object" label dropped.
+name: exterior_seg_clean
+task: segmentation
+description: Side-agnostic exterior taxonomy (doors, lights, mirrors merged; 'object' dropped).
+sources:
+  - name: carparts_seg
+    class_map:
+      back_left_door: back_door
+      back_right_door: back_door
+      front_left_door: front_door
+      front_right_door: front_door
+      back_left_light: back_light
+      back_right_light: back_light
+      front_left_light: front_light
+      front_right_light: front_light
+      left_mirror: mirror
+      right_mirror: mirror
+      object: null
+split:
+  strategy: grouped
+  fractions: {train: 0.8, val: 0.1, test: 0.1}
+  seed: 2026
+  dedupe_hash: true
+classes: [back_bumper, back_door, back_glass, back_light, front_bumper, front_door, front_glass,
+          front_light, hood, mirror, tailgate, trunk, wheel]

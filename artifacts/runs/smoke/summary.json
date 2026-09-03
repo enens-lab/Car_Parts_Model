@@ -1,0 +1,103 @@
+{
+ "run": "smoke",
+ "recipe": "smoke_exterior_seg",
+ "model": "rfdetr-seg-nano",
+ "model_spec": {
+  "cls_name": "RFDETRSegNano",
+  "task": "segmentation",
+  "resolution": 312,
+  "multiple": 12,
+  "license": "Apache-2.0"
+ },
+ "resolution": 312,
+ "constructor": {
+  "resolution": 312,
+  "gradient_checkpointing": false
+ },
+ "train_config": {
+  "epochs": 1,
+  "batch_size": 2,
+  "grad_accum_steps": 2,
+  "lr": 0.0001,
+  "lr_encoder": 0.00015,
+  "weight_decay": 0.0001,
+  "use_ema": false,
+  "early_stopping": false,
+  "checkpoint_interval": 1,
+  "warmup_epochs": 0,
+  "lr_scheduler": "step",
+  "num_workers": 0,
+  "seed": 0,
+  "tensorboard": false,
+  "log_per_class_metrics": false
+ },
+ "class_names": [
+  "back_bumper",
+  "back_door",
+  "back_glass",
+  "back_left_door",
+  "back_left_light",
+  "back_light",
+  "back_right_door",
+  "back_right_light",
+  "front_bumper",
+  "front_door",
+  "front_glass",
+  "front_left_door",
+  "front_left_light",
+  "front_light",
+  "front_right_door",
+  "front_right_light",
+  "hood",
+  "left_mirror",
+  "object",
+  "right_mirror",
+  "tailgate",
+  "trunk",
+  "wheel"
+ ],
+ "num_classes": 23,
+ "dataset_card": {
+  "path": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\data\\processed\\smoke_exterior_seg\\dataset_card.json",
+  "created": "2026-09-03T10:49:18",
+  "split": "grouped",
+  "images": {
+   "train": 118,
+   "val": 15,
+   "test": 18
+  }
+ },
+ "checkpoint": "C:\\Users\\huyn\\Downloads\\Car_Parts_Model\\artifacts\\runs\\smoke\\rfdetr\\checkpoint_best_total.pth",
+ "train_seconds": 18.2,
+ "started": "2026-09-03T10:49:28",
+ "finished": "2026-09-03T10:49:48",
+ "test_metrics": {
+  "bbox": {
+   "AP": 0.02348679467118084,
+   "AP50": 0.03422692384810865,
+   "AP75": 0.02501390975577671,
+   "AP_small": 0.0,
+   "AP_medium": 0.02401928494429987,
+   "AP_large": 0.035337482651804766,
+   "AR100": 0.12117303061575507
+  },
+  "segm": {
+   "AP": 0.016597528764159437,
+   "AP50": 0.025490756113688156,
+   "AP75": 0.02036459214427405,
+   "AP_small": 0.0,
+   "AP_medium": 0.018410807862660302,
+   "AP_large": 0.02584203717010546,
+   "AR100": 0.09957000343997247
+  }
+ },
+ "versions": {
+  "python": "3.12.13",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "torch": "2.14.0+cu126",
+  "rfdetr": "n/a",
+  "supervision": "0.30.1",
+  "pytorch_lightning": "2.6.5",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU"
+ }
+}

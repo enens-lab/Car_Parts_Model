@@ -1,0 +1,133 @@
+{
+ "strategy": "grouped",
+ "seed": 2026,
+ "counts": {
+  "train": 3067,
+  "val": 383,
+  "test": 383
+ },
+ "groups": {
+  "train": 468,
+  "val": 58,
+  "test": 58
+ },
+ "cross_split_groups": 0,
+ "leaked_eval_images": 0,
+ "per_class": {
+  "back_bumper": {
+   "train": 688,
+   "val": 93,
+   "test": 89
+  },
+  "back_door": {
+   "train": 999,
+   "val": 119,
+   "test": 134
+  },
+  "back_glass": {
+   "train": 825,
+   "val": 119,
+   "test": 114
+  },
+  "back_left_door": {
+   "train": 215,
+   "val": 18,
+   "test": 22
+  },
+  "back_left_light": {
+   "train": 231,
+   "val": 32,
+   "test": 28
+  },
+  "back_light": {
+   "train": 1506,
+   "val": 189,
+   "test": 207
+  },
+  "back_right_door": {
+   "train": 168,
+   "val": 31,
+   "test": 25
+  },
+  "back_right_light": {
+   "train": 184,
+   "val": 24,
+   "test": 33
+  },
+  "front_bumper": {
+   "train": 1601,
+   "val": 202,
+   "test": 175
+  },
+  "front_door": {
+   "train": 1114,
+   "val": 144,
+   "test": 151
+  },
+  "front_glass": {
+   "train": 1664,
+   "val": 213,
+   "test": 185
+  },
+  "front_left_door": {
+   "train": 235,
+   "val": 21,
+   "test": 23
+  },
+  "front_left_light": {
+   "train": 419,
+   "val": 49,
+   "test": 36
+  },
+  "front_light": {
+   "train": 2498,
+   "val": 297,
+   "test": 293
+  },
+  "front_right_door": {
+   "train": 191,
+   "val": 30,
+   "test": 27
+  },
+  "front_right_light": {
+   "train": 381,
+   "val": 50,
+   "test": 43
+  },
+  "hood": {
+   "train": 1673,
+   "val": 218,
+   "test": 189
+  },
+  "left_mirror": {
+   "train": 419,
+   "val": 42,
+   "test": 36
+  },
+  "object": {
+   "train": 8,
+   "val": 2,
+   "test": 2
+  },
+  "right_mirror": {
+   "train": 397,
+   "val": 55,
+   "test": 47
+  },
+  "tailgate": {
+   "train": 83,
+   "val": 11,
+   "test": 7
+  },
+  "trunk": {
+   "train": 140,
+   "val": 14,
+   "test": 19
+  },
+  "wheel": {
+   "train": 723,
+   "val": 88,
+   "test": 66
+  }
+ }
+}

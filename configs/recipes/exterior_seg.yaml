@@ -1,0 +1,15 @@
+# Exterior body-part INSTANCE SEGMENTATION — the 23 original carparts-seg classes.
+# Comparable to published carparts-seg numbers when `split.strategy: original` is used; the default
+# grouped split removes the train/test leakage caused by Roboflow augmentation copies.
+name: exterior_seg
+task: segmentation
+description: 23 exterior car-part classes with polygon masks (carparts-seg, CC BY 4.0).
+sources:
+  - name: carparts_seg
+split:
+  strategy: grouped        # grouped | original
+  fractions: {train: 0.8, val: 0.1, test: 0.1}
+  seed: 2026
+  dedupe_hash: true
+classes: null              # keep source order (0..22 of carparts-seg.yaml)
+min_instances_per_class: 0

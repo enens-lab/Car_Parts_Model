@@ -1,0 +1,163 @@
+{
+ "sources": {
+  "kaggle_engine_bay": {
+   "all": {
+    "images": 1201,
+    "images_without_annotations": 0,
+    "annotations": 9989,
+    "annotations_with_masks": 0,
+    "classes": 26,
+    "per_class": {
+     "engine_oil_fill_cap": 1019,
+     "brake_fluid": 999,
+     "engine_cover": 919,
+     "engine_coolant_reservoir": 911,
+     "windshield_wiper_fluid": 815,
+     "air_filter_cover": 740,
+     "engine_oil_dipstick": 712,
+     "battery": 712,
+     "radiator": 672,
+     "fuse_box": 535,
+     "radiator_cap": 478,
+     "power_steering_reservoir": 401,
+     "alternator": 240,
+     "abs_unit": 224,
+     "cold_air_intake": 190,
+     "oil_filter_housing": 115,
+     "clutch_fluid_reservoir": 91,
+     "transmission_oil_dipstick": 55,
+     "air_filter": 49,
+     "electric_motor": 27,
+     "cabin_air_filter_housing": 27,
+     "inverter_coolant_reservoir": 24,
+     "intercooler_coolant_reservoir": 19,
+     "secondary_coolant_reservoir": 8,
+     "oil_filter": 6,
+     "atf_oil_reservoir": 1
+    },
+    "sources": {
+     "kaggle_engine_bay": 1201
+    },
+    "groups": 1201
+   }
+  },
+  "rf_engine_bay_parts_stephens": {
+   "train": {
+    "images": 1622,
+    "images_without_annotations": 0,
+    "annotations": 13600,
+    "annotations_with_masks": 0,
+    "classes": 26,
+    "per_class": {
+     "engine_oil_fill_cap": 1398,
+     "brake_fluid": 1339,
+     "engine_cover": 1251,
+     "engine_coolant_reservoir": 1245,
+     "windshield_wiper_fluid": 1114,
+     "air_filter_cover": 1016,
+     "engine_oil_dipstick": 982,
+     "battery": 971,
+     "radiator": 919,
+     "fuse_box": 711,
+     "radiator_cap": 646,
+     "power_steering_reservoir": 556,
+     "alternator": 314,
+     "abs_unit": 307,
+     "cold_air_intake": 253,
+     "oil_filter_housing": 168,
+     "clutch_fluid_reservoir": 116,
+     "transmission_oil_dipstick": 87,
+     "air_filter": 54,
+     "cabin_air_filter_housing": 42,
+     "electric_motor": 39,
+     "inverter_coolant_reservoir": 33,
+     "intercooler_coolant_reservoir": 24,
+     "secondary_coolant_reservoir": 9,
+     "oil_filter": 4,
+     "atf_oil_reservoir": 2
+    },
+    "sources": {
+     "rf_engine_bay_parts_stephens": 1622
+    },
+    "groups": 1073
+   },
+   "val": {
+    "images": 461,
+    "images_without_annotations": 0,
+    "annotations": 3864,
+    "annotations_with_masks": 0,
+    "classes": 26,
+    "per_class": {
+     "brake_fluid": 395,
+     "engine_oil_fill_cap": 395,
+     "engine_cover": 355,
+     "engine_coolant_reservoir": 339,
+     "windshield_wiper_fluid": 308,
+     "air_filter_cover": 285,
+     "engine_oil_dipstick": 278,
+     "radiator": 260,
+     "battery": 247,
+     "fuse_box": 220,
+     "radiator_cap": 195,
+     "power_steering_reservoir": 152,
+     "alternator": 95,
+     "abs_unit": 92,
+     "cold_air_intake": 76,
+     "oil_filter_housing": 47,
+     "clutch_fluid_reservoir": 42,
+     "air_filter": 21,
+     "transmission_oil_dipstick": 15,
+     "inverter_coolant_reservoir": 11,
+     "electric_motor": 11,
+     "cabin_air_filter_housing": 8,
+     "intercooler_coolant_reservoir": 8,
+     "secondary_coolant_reservoir": 5,
+     "oil_filter": 4
+    },
+    "sources": {
+     "rf_engine_bay_parts_stephens": 461
+    },
+    "groups": 416
+   },
+   "test": {
+    "images": 230,
+    "images_without_annotations": 0,
+    "annotations": 1812,
+    "annotations_with_masks": 0,
+    "classes": 26,
+    "per_class": {
+     "brake_fluid": 185,
+     "engine_oil_fill_cap": 179,
+     "engine_cover": 170,
+     "engine_coolant_reservoir": 169,
+     "windshield_wiper_fluid": 152,
+     "battery": 138,
+     "air_filter_cover": 128,
+     "engine_oil_dipstick": 123,
+     "radiator": 110,
+     "fuse_box": 97,
+     "radiator_cap": 92,
+     "power_steering_reservoir": 71,
+     "alternator": 50,
+     "cold_air_intake": 40,
+     "abs_unit": 39,
+     "clutch_fluid_reservoir": 17,
+     "air_filter": 14,
+     "oil_filter_housing": 13,
+     "transmission_oil_dipstick": 7,
+     "intercooler_coolant_reservoir": 4,
+     "inverter_coolant_reservoir": 4,
+     "cabin_air_filter_housing": 4,
+     "electric_motor": 3,
+     "secondary_coolant_reservoir": 2,
+     "oil_filter": 1
+    },
+    "sources": {
+     "rf_engine_bay_parts_stephens": 230
+    },
+    "groups": 216
+   }
+  }
+ },
+ "skipped": []
+}

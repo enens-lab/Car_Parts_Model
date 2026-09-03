@@ -1,0 +1,149 @@
+{
+ "strategy": "grouped",
+ "seed": 2026,
+ "counts": {
+  "train": 2810,
+  "val": 352,
+  "test": 352
+ },
+ "groups": {
+  "train": 840,
+  "val": 104,
+  "test": 105
+ },
+ "cross_split_groups": 0,
+ "leaked_eval_images": 0,
+ "per_class": {
+  "inverter_coolant_reservoir": {
+   "train": 57,
+   "val": 12,
+   "test": 3
+  },
+  "battery": {
+   "train": 1653,
+   "val": 229,
+   "test": 186
+  },
+  "radiator_cap": {
+   "train": 1168,
+   "val": 111,
+   "test": 132
+  },
+  "windshield_wiper_fluid": {
+   "train": 1931,
+   "val": 217,
+   "test": 241
+  },
+  "fuse_box": {
+   "train": 1242,
+   "val": 165,
+   "test": 156
+  },
+  "power_steering_reservoir": {
+   "train": 928,
+   "val": 130,
+   "test": 122
+  },
+  "brake_fluid": {
+   "train": 2326,
+   "val": 292,
+   "test": 300
+  },
+  "engine_oil_fill_cap": {
+   "train": 2378,
+   "val": 314,
+   "test": 299
+  },
+  "engine_oil_dipstick": {
+   "train": 1664,
+   "val": 235,
+   "test": 196
+  },
+  "air_filter_cover": {
+   "train": 1738,
+   "val": 228,
+   "test": 203
+  },
+  "abs_unit": {
+   "train": 505,
+   "val": 86,
+   "test": 71
+  },
+  "alternator": {
+   "train": 584,
+   "val": 65,
+   "test": 50
+  },
+  "engine_coolant_reservoir": {
+   "train": 2123,
+   "val": 269,
+   "test": 269
+  },
+  "radiator": {
+   "train": 1615,
+   "val": 160,
+   "test": 186
+  },
+  "air_filter": {
+   "train": 108,
+   "val": 12,
+   "test": 18
+  },
+  "engine_cover": {
+   "train": 2153,
+   "val": 266,
+   "test": 276
+  },
+  "cold_air_intake": {
+   "train": 436,
+   "val": 35,
+   "test": 88
+  },
+  "clutch_fluid_reservoir": {
+   "train": 222,
+   "val": 24,
+   "test": 20
+  },
+  "transmission_oil_dipstick": {
+   "train": 135,
+   "val": 20,
+   "test": 9
+  },
+  "intercooler_coolant_reservoir": {
+   "train": 46,
+   "val": 3,
+   "test": 6
+  },
+  "oil_filter_housing": {
+   "train": 277,
+   "val": 27,
+   "test": 39
+  },
+  "atf_oil_reservoir": {
+   "train": 3,
+   "val": 0,
+   "test": 0
+  },
+  "cabin_air_filter_housing": {
+   "train": 54,
+   "val": 9,
+   "test": 18
+  },
+  "secondary_coolant_reservoir": {
+   "train": 18,
+   "val": 3,
+   "test": 3
+  },
+  "electric_motor": {
+   "train": 62,
+   "val": 12,
+   "test": 6
+  },
+  "oil_filter": {
+   "train": 15,
+   "val": 0,
+   "test": 0
+  }
+ },
+ "duplicate_annotations_removed": 3
+}

@@ -1,0 +1,115 @@
+{
+ "sources": {
+  "carparts_seg": {
+   "train": {
+    "images": 3156,
+    "images_without_annotations": 116,
+    "annotations": 16733,
+    "annotations_with_masks": 16733,
+    "classes": 23,
+    "per_class": {
+     "front_light": 2520,
+     "hood": 1706,
+     "front_glass": 1682,
+     "front_bumper": 1616,
+     "back_light": 1588,
+     "front_door": 1150,
+     "back_door": 1008,
+     "back_glass": 890,
+     "back_bumper": 732,
+     "wheel": 709,
+     "right_mirror": 412,
+     "front_left_light": 412,
+     "left_mirror": 404,
+     "front_right_light": 392,
+     "back_left_light": 244,
+     "front_left_door": 224,
+     "front_right_door": 208,
+     "back_right_light": 204,
+     "back_left_door": 204,
+     "back_right_door": 184,
+     "trunk": 146,
+     "tailgate": 88,
+     "object": 10
+    },
+    "sources": {
+     "carparts_seg": 3156
+    },
+    "groups": 579
+   },
+   "val": {
+    "images": 401,
+    "images_without_annotations": 12,
+    "annotations": 2042,
+    "annotations_with_masks": 2042,
+    "classes": 23,
+    "per_class": {
+     "front_light": 373,
+     "back_light": 226,
+     "hood": 214,
+     "front_glass": 214,
+     "front_bumper": 208,
+     "front_door": 167,
+     "back_door": 159,
+     "back_glass": 115,
+     "back_bumper": 94,
+     "wheel": 53,
+     "right_mirror": 31,
+     "left_mirror": 31,
+     "front_left_light": 30,
+     "front_right_light": 26,
+     "back_left_light": 19,
+     "front_left_door": 15,
+     "back_left_door": 15,
+     "back_right_light": 13,
+     "front_right_door": 12,
+     "back_right_door": 12,
+     "trunk": 9,
+     "tailgate": 5,
+     "object": 1
+    },
+    "sources": {
+     "carparts_seg": 401
+    },
+    "groups": 295
+   },
+   "test": {
+    "images": 276,
+    "images_without_annotations": 7,
+    "annotations": 1599,
+    "annotations_with_masks": 1599,
+    "classes": 23,
+    "per_class": {
+     "front_light": 195,
+     "front_glass": 166,
+     "hood": 160,
+     "front_bumper": 154,
+     "wheel": 115,
+     "front_door": 92,
+     "back_light": 88,
+     "back_door": 85,
+     "left_mirror": 62,
+     "front_left_light": 62,
+     "right_mirror": 56,
+     "front_right_light": 56,
+     "back_glass": 53,
+     "back_bumper": 44,
+     "front_left_door": 40,
+     "back_left_door": 36,
+     "back_left_light": 28,
+     "back_right_door": 28,
+     "front_right_door": 28,
+     "back_right_light": 24,
+     "trunk": 18,
+     "tailgate": 8,
+     "object": 1
+    },
+    "sources": {
+     "carparts_seg": 276
+    },
+    "groups": 229
+   }
+  }
+ },
+ "skipped": []
+}
