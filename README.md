@@ -37,8 +37,9 @@ uv run python scripts/export.py   --run exterior_seg_m --format onnx --verify ph
 uv run python app/server.py --run exterior_seg_m --run engine_bay_m     # -> http://127.0.0.1:8000
 ```
 
-On the 4×RTX 6000 Ada box: `bash scripts/remote_setup.sh`, then `torchrun --nproc_per_node=4 scripts/train.py … --config rfdetr_4x48gb`
-(see [HANDOFF.md](HANDOFF.md)).
+On the shared 4×RTX 6000 Ada box: `bash scripts/remote_setup.sh` (sets `CUDA_VISIBLE_DEVICES=3`), then the same
+commands with `--config rfdetr_48gb`. **GPU 0 is forbidden there and GPU 3 is the default** — the package refuses to
+start on GPU 0 (see [HANDOFF.md](HANDOFF.md)).
 
 ## What makes this pipeline trustworthy
 
@@ -58,9 +59,10 @@ On the 4×RTX 6000 Ada box: `bash scripts/remote_setup.sh`, then `torchrun --npr
 configs/
   paths.yaml                 where data/artifacts live
   recipes/*.yaml             sources + class map + split policy -> one processed dataset
-  train/*.yaml               model + hyper-parameters per hardware budget (smoke, poc_8gb, rfdetr_8gb, rfdetr_24gb, rfdetr_4x48gb)
+  train/*.yaml               model + hyper-parameters per hardware budget (smoke, poc_8gb, rfdetr_8gb, rfdetr_24gb, rfdetr_48gb, rfdetr_3x48gb)
 src/carparts/
   constants.py               canonical taxonomies (23 exterior, 26 engine bay) + name normalisation
+  gpu_policy.py              shared-box rule: GPU 0 forbidden, GPU 3 default (no-op on < 4-GPU machines)
   data/coco.py               canonical in-memory COCO model: merge, remap, dedupe, validate, save/load
   data/yolo.py               YOLO box/polygon parsing (Ultralytics / Roboflow / flat layouts), YOLO writer
   data/splits.py             grouped split, perceptual-hash duplicate detection, split reports

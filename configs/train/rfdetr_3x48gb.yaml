@@ -1,0 +1,25 @@
+# OPT-IN multi-GPU config: GPUs 1, 2, 3 — only when 1 and 2 are idle and you have the go-ahead to borrow them.
+# GPU 0 is forbidden and the code refuses to start if it is in CUDA_VISIBLE_DEVICES.
+#   CUDA_VISIBLE_DEVICES=1,2,3 uv run torchrun --nproc_per_node=3 scripts/train.py --recipe exterior_seg --config rfdetr_3x48gb --name exterior_seg_xl_3gpu
+# Effective batch = 8 x 1 x 3 GPUs = 24 (Lightning DDP).
+model: rfdetr-seg-xlarge
+epochs: 100
+batch_size: 8                # per GPU
+grad_accum_steps: 1
+devices: auto
+lr: 1.0e-4
+lr_encoder: 1.5e-4
+weight_decay: 1.0e-4
+resolution: null
+gradient_checkpointing: false
+use_ema: true
+early_stopping: true
+early_stopping_patience: 15
+early_stopping_min_delta: 0.001
+checkpoint_interval: 5
+warmup_epochs: 1
+lr_scheduler: cosine
+num_workers: 8               # per rank
+seed: 2026
+tensorboard: true
+log_per_class_metrics: true

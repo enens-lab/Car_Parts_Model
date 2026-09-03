@@ -1,0 +1,26 @@
+# Production config for ONE RTX 6000 Ada (48 GB) — GPU 3 on the shared box (GPU 0 is forbidden; see HANDOFF.md).
+#   export CUDA_VISIBLE_DEVICES=3
+#   uv run python scripts/train.py --recipe exterior_seg   --config rfdetr_48gb --name exterior_seg_xl
+#   uv run python scripts/train.py --recipe engine_bay_det --config rfdetr_48gb --model rfdetr-large --name engine_bay_l
+# Effective batch = batch_size x grad_accum_steps = 8 x 4 = 32.
+model: rfdetr-seg-xlarge     # Apache-2.0 (all Seg variants are; only the *detection* XL/2XL need rfdetr[plus] / PML)
+epochs: 100
+batch_size: 8
+grad_accum_steps: 4
+devices: 1
+lr: 1.0e-4
+lr_encoder: 1.5e-4
+weight_decay: 1.0e-4
+resolution: null             # seg-xlarge default 624 (multiple of 24); try 720 for small parts once the baseline is in
+gradient_checkpointing: false
+use_ema: true
+early_stopping: true
+early_stopping_patience: 15
+early_stopping_min_delta: 0.001
+checkpoint_interval: 5
+warmup_epochs: 1
+lr_scheduler: cosine
+num_workers: 12
+seed: 2026
+tensorboard: true
+log_per_class_metrics: true

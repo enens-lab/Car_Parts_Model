@@ -19,4 +19,11 @@ for _k in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS"):
     _os.environ.setdefault(_k, "4")
 _os.environ.setdefault("PYTHONUTF8", "1")
 
+# Shared training box: GPU 0 is forbidden, GPU 3 is the default (no-op on machines with < 4 GPUs).
+from .gpu_policy import apply_gpu_policy as _apply_gpu_policy  # noqa: E402
+
+_note = _apply_gpu_policy()
+if _note:
+    print(_note)
+
 __version__ = "0.1.0"

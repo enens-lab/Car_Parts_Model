@@ -25,7 +25,7 @@ Apache-2.0. The accuracy gap to the best AGPL/PML options is a few AP points at 
 
 | Recipe | Model | Why |
 |---|---|---|
-| `exterior_seg` (23 classes, masks) | `rfdetr-seg-medium` on 8 GB, `rfdetr-seg-xlarge` on the 4×48 GB box | pixel masks for exterior parts (damage/repair workflows) |
+| `exterior_seg` (23 classes, masks) | `rfdetr-seg-medium` on 8 GB, `rfdetr-seg-xlarge` on one RTX 6000 Ada (GPU 3 of the shared box) | pixel masks for exterior parts (damage/repair workflows) |
 | `engine_bay_det` (26 classes, boxes) | `rfdetr-medium` / `rfdetr-large` | box-only labels exist for the engine bay |
 | `unified_det` (49 classes, boxes) | `rfdetr-large` | one model when deployment simplicity beats exterior masks |
 
