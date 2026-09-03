@@ -38,7 +38,10 @@ Mechanics:
 | Run | Model | Data | Epochs | val mask mAP (best) | test bbox AP / AP50 | test mask AP / AP50 | Wall-clock | Where |
 |---|---|---|---|---|---|---|---|---|
 | `smoke` | rfdetr-seg-nano @312 | 24-photo subset | 1 | 0.01 | — | — | 0.5 min | laptop, pipeline check only |
-| `poc_exterior_seg_nano` | rfdetr-seg-nano @312 | exterior_seg | 12 | 0.488 @ epoch 8 (run in progress) | _see artifacts/runs/poc_exterior_seg_nano/summary.json_ | | ~65 min | laptop POC |
+| `poc_exterior_seg_nano` | rfdetr-seg-nano @312 | exterior_seg | 12 | 0.493 @ epoch 10 | **0.508 / 0.642** | **0.481 / 0.640** | 66 min | laptop POC (batch 4×4, workers 0) |
+
+POC per-class mask AP (test) is in `artifacts/runs/poc_exterior_seg_nano/eval_test.json`; the demo screenshot is
+`demo_prediction.jpg` next to it. Served locally with `python app/server.py --run poc_exterior_seg_nano`.
 
 Production targets (box, GPU 3): `exterior_seg` with rfdetr-seg-xlarge @624 and `engine_bay_det` with rfdetr-large
 @704, 100 epochs, effective batch 32 — `configs/train/rfdetr_48gb.yaml`.

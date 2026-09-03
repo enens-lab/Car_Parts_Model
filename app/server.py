@@ -12,8 +12,6 @@ Endpoints
   POST /predict                multipart `file` (+ form `threshold`) -> JSON objects (label, confidence, bbox, polygon)
   POST /predict/image          same input -> annotated JPEG
 """
-from __future__ import annotations
-
 import argparse
 import io
 import json
@@ -27,6 +25,12 @@ import carparts  # noqa: E402,F401  (BLAS env before numpy)
 
 from carparts.config import load_env, load_paths  # noqa: E402
 
+try:  # FastAPI types must be module-level (not string annotations) so request validation can resolve them
+    from fastapi import FastAPI, File, Form, HTTPException, UploadFile  # noqa: E402
+    from fastapi.responses import HTMLResponse, JSONResponse, Response  # noqa: E402
+except ImportError as e:  # pragma: no cover
+    raise SystemExit("FastAPI is not installed: uv sync --extra serve") from e
+
 load_env()
 
 INDEX_HTML = (Path(__file__).parent / "index.html").read_text(encoding="utf-8")
@@ -34,8 +38,6 @@ INDEX_HTML = (Path(__file__).parent / "index.html").read_text(encoding="utf-8")
 
 def create_app(checkpoints: dict[str, Path], threshold: float = 0.5):
     import numpy as np
-    from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-    from fastapi.responses import HTMLResponse, JSONResponse, Response
     from PIL import Image, ImageOps
 
     from carparts.infer import CarPartsModel
