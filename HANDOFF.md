@@ -25,7 +25,7 @@ Mechanics:
 
 **Done on the laptop (RTX 4070 Laptop 8 GB, 16 GB RAM, Windows 11):**
 
-- Full pipeline implemented and unit-tested (`pytest tests`, 23 tests): sources → canonical COCO → leakage-safe
+- Full pipeline implemented and unit-tested (`pytest tests`, 19 tests): sources → canonical COCO → leakage-safe
   recipes → RF-DETR fine-tuning → per-class COCO eval → predict → ONNX export → FastAPI demo.
 - `scripts/smoke_test.py` passes all four stages (prepare 10 s, train+eval 30 s, predict 0.5 s, ONNX export 5 s).
 - Datasets downloaded and processed (train / valid / test images): `exterior_seg` 3,067 / 383 / 383 (23 classes),
